@@ -48,23 +48,27 @@ form div {
 }
 
 .nav-link {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   color: black;
   /* flex-wrap: nowrap; */
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 #nav-bar {
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  align-items: center;
+  /* display: flex;
+  flex-direction: column; */
   /* flex-wrap: nowrap; */
-  justify-content: space-between;
+  /* justify-content: space-between;
   align-items: center;
   color: black;
   width: 100%;
-  min-height: 15%;
+  min-height: 15%; */
 }
 
 #cart {

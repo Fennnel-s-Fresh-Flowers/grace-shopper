@@ -5,15 +5,11 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div id="nav-bar">
+  <div>
     <h1>FENNEL'S FRESH FLOWERS</h1>
-    <nav>
-      <Link className="nav-link" to="/home">
-        Home
-      </Link>
-      <Link className="nav-link" to="/flowers">
-        Flowers
-      </Link>
+    <nav id="nav-bar">
+      <Link to="/home">Home</Link>
+      <Link to="/flowers">Flowers</Link>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -24,12 +20,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
-          <Link className="nav-link" to="/signup">
-            Sign Up
-          </Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
         </div>
       )}
     </nav>
