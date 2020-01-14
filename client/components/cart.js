@@ -3,7 +3,7 @@ import React from 'react'
 class Cart extends React.Component {
   render() {
     return (
-      <div className="cart">
+      <section className="cart">
         <ul>
           <li>imageUrl</li>
           <li>name</li>
@@ -14,7 +14,7 @@ class Cart extends React.Component {
         </ul>
         <div>cartTotal</div>
         <button type="button">CHECKOUT</button>
-      </div>
+      </section>
     )
   }
 }
