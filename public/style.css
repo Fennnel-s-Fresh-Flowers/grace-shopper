@@ -47,25 +47,17 @@ form div {
   align-items: center;
 }
 
-.nav-link {
-  /* display: flex;
-  flex-direction: row; */
-  color: black;
-  /* flex-wrap: nowrap; */
-  justify-content: space-around;
-  align-items: center;
-}
-
 #nav-bar {
-  position: fixed;
+  position: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
   width: 100%;
   top: 0;
-  align-items: center;
-  /* display: flex;
-  flex-direction: column; */
+  align-items: left;
+
   /* flex-wrap: nowrap; */
   /* justify-content: space-between;
-  align-items: center;
+  align-items: center
   color: black;
   width: 100%;
   min-height: 15%; */
@@ -73,7 +65,7 @@ form div {
 
 #cart {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   min-width: 15%;
   height: 100%;
   background-color: rgb(255, 253, 253);
