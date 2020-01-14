@@ -20,7 +20,7 @@ form div {
   display: inline-block;
 }
 
-.cart {
+.cart section {
   width: 20%;
   height: 100%;
   float: left;
