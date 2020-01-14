@@ -4,14 +4,14 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const flowers = Flower.findAll()
+    const flowers = await Flower.findAll()
     res.json(flowers)
   } catch (error) {
     next(error)
   }
 })
 
-router.post('/campuses', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const inputs = req.body
     const newFlower = await Flower.create(inputs)
