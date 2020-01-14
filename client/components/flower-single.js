@@ -16,6 +16,16 @@ class SingleFlower extends React.Component {
         <h1>{single.name}</h1>
         <img src={single.imgUrl} />
         <p>{single.description}</p>
+        <div>{single.stock} in stock</div>
+        <form className="quantity-box">
+          <label htmlFor="quantity">quantity</label>
+          <input
+            type="number"
+            placeholder="1"
+            // add onChange at a later date
+          />
+          <button type="submit">Add to Cart</button>
+        </form>
       </div>
     )
   }
