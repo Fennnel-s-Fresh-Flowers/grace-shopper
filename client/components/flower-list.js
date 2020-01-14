@@ -7,7 +7,7 @@ export default function FlowerList(props) {
       {props.flowers.map(flower => (
         <div key={flower.id}>
           <Link to={`/flowers/:${flower.id}`}>
-            <img srg={flower.imageUrl} />
+            <img className="flowerImage" src={flower.imgUrl} />
             <h3>{flower.name}</h3>
           </Link>
           <div>${flower.price / 100}</div>
