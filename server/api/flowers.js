@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
   try {
     const inputs = req.body
     const newFlower = await Flower.create(inputs)
-    res.json(newFlower)
+    res.status(201).json(newFlower)
   } catch (error) {
     next(error)
   }
@@ -47,19 +47,12 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    const targetId = req.params.id
-    const targetFlower = await Flower.findOne({
+    await Flower.destroy({
       where: {
-        id: targetId
+        id: req.params.id
       }
     })
-
-    if (targetFlower) {
-      await targetFlower.destroy()
-      res.sendStatus(204)
-    } else {
-      res.sendStatus(404)
-    }
+    res.status(204).end()
   } catch (error) {
     next(error)
   }
