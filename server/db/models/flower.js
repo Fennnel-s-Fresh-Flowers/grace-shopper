@@ -14,7 +14,7 @@ const Flower = db.define('flower', {
       notEmpty: true
     }
   },
-  price: {type: Sequelize.INTEGER},
+  price: {type: Sequelize.INTEGER}, //lets be sure to make the price a quantity in pennies because JS is bad at math
   stock: {type: Sequelize.INTEGER},
   imgUrl: {type: Sequelize.STRING}
 })
