@@ -11,6 +11,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const flower = await Flower.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.json(flower)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const inputs = req.body
