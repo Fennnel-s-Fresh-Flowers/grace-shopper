@@ -33,11 +33,15 @@ form div {
   display: inline-block;
 } */
 
+.nav-link {
+  margin: 10px;
+}
+
 #nav-bar {
   display: flex;
   flex-direction: row;
   width: 100%;
-  min-height: 10%;
+  min-height: 15%;
 }
 
 #cart {
