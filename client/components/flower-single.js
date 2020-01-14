@@ -1,45 +1,32 @@
 import React from 'react'
+import {getAFlower} from '../store/flowers'
+import {connect} from 'react-redux'
 
 class SingleFlower extends React.Component {
-  constructor() {
-    super()
-    this.clickHandler = this.clickHandler.bind(this)
-
-    this.state = {
-      name: '',
-      description: '',
-      price: 0,
-      stock: 0,
-      imageUrl: ''
-    }
-  }
   componentDidMount() {
-    this.setState()
-  }
-
-  clickHandler() {
-    //thunk action creator to dispatch
-    //push request to user's cart
+    const {id} = this.props.match.params
+    this.props.getAFlower(id)
   }
 
   render() {
+    console.log(this.props)
+    const {single} = this.props.flower
     return (
       <div>
-        <img src={this.state.imageUrl} />
-        <div>{this.state.name}</div>
-        <div>{this.state.description}</div>
-        <div>{this.state.price}</div>
-        <div>{this.state.stock}</div>
-        <button
-          type="button"
-          onClick={this.clickHandler}
-          className="AddToCartButton"
-        >
-          Add To Cart
-        </button>
+        <h1>{single.name}</h1>
+        <img src={single.imgUrl} />
+        <p>{single.description}</p>
       </div>
     )
   }
 }
 
-export default SingleFlower
+const mapStateToProps = state => {
+  return {flower: state.flowers}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {getAFlower: id => dispatch(getAFlower(id))}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleFlower)
