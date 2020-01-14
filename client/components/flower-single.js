@@ -3,9 +3,21 @@ import {getAFlower} from '../store/flowers'
 import {connect} from 'react-redux'
 
 class SingleFlower extends React.Component {
+  constructor() {
+    super()
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   componentDidMount() {
     const {id} = this.props.match.params
     this.props.getAFlower(id)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    console.log('in cart handle submit', this.props)
+    // const {single} = this.props.
+    // addToCart({})
   }
 
   render() {
@@ -17,7 +29,7 @@ class SingleFlower extends React.Component {
         <img src={single.imgUrl} />
         <p>{single.description}</p>
         <div>{single.stock} in stock</div>
-        <form className="quantity-box">
+        <form className="quantity-box" onSubmit={this.handleSubmit}>
           <label htmlFor="quantity">quantity</label>
           <input
             type="number"
