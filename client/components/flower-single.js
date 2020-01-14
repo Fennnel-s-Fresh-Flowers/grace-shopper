@@ -1,6 +1,6 @@
 import React from 'react'
 
-class SingleProduct extends React.Component {
+class SingleFlower extends React.Component {
   constructor() {
     super()
     this.clickHandler = this.clickHandler.bind(this)
@@ -42,4 +42,4 @@ class SingleProduct extends React.Component {
   }
 }
 
-export default SingleProduct
+export default SingleFlower
