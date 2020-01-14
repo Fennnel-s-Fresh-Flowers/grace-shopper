@@ -2,9 +2,12 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>
+    <div id="home">
       <h2>Our Story</h2>
-      <img src="https://www.gramercyflowers.com/v/vspfiles/assets/images/ABOUT_holiday_1.jpg" />
+      <img
+        id="home-img"
+        src="https://www.gramercyflowers.com/v/vspfiles/assets/images/ABOUT_holiday_1.jpg"
+      />
       <p>
         Established in 1904, Fennel's Fresh Flowers continues to flourish as New
         York City's oldest family owned and operated floral business. With the
