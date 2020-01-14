@@ -9,6 +9,33 @@ describe('User model', () => {
     return db.sync({force: true})
   })
 
+  describe('modelDefinition', () => {
+    let cody
+
+    beforeEach(async () => {
+      cody = await User.create({
+        email: 'cody@puppybook.com',
+        password: 'bones',
+        firstName: 'cody',
+        lastName: 'puggy'
+      })
+    })
+
+    it('returns the correct first name', () => {
+      expect(cody.firstName).to.be.equal('cody')
+    })
+    it('returns the correct last name', () => {
+      expect(cody.lastName).to.be.equal('puggy')
+    })
+    it('returns the correct email', () => {
+      expect(cody.email).to.be.equal('cody@puppybook.com')
+      expect(cody.email).to.include('@')
+    })
+    it('checks the default value for admin', () => {
+      expect(cody.admin).to.be.equal(false)
+    })
+  })
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
@@ -16,7 +43,9 @@ describe('User model', () => {
       beforeEach(async () => {
         cody = await User.create({
           email: 'cody@puppybook.com',
-          password: 'bones'
+          password: 'bones',
+          firstName: 'cody',
+          lastName: 'puggy'
         })
       })
 
