@@ -19,3 +19,9 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.cart {
+  width: 20%;
+  height: 100%;
+  float: left;
+}
