@@ -6,7 +6,7 @@ export default function FlowerList(props) {
     <div className="flower-list">
       {props.flowers.map(flower => (
         <div key={flower.id}>
-          <Link to={`/flowers/:${flower.id}`}>
+          <Link to={`/flowers/${flower.id}`}>
             <img className="flowerImage" src={flower.imgUrl} />
             <h3>{flower.name}</h3>
           </Link>
