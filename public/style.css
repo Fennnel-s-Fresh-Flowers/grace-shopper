@@ -1,7 +1,20 @@
-body {
-  font-family: sans-serif;
+* {
+  box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  font-family: 'Open Sans', arial, sans-serif;
+  padding-bottom: 56px;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  /* background: linear-gradient(45deg, #222, #333); */
+  background-attachment: fixed;
+  /* color: #f2f2f2; */
+  letter-spacing: 0.03em;
+}
+/* 
 a {
   text-decoration: none;
 }
@@ -10,7 +23,7 @@ label {
   display: block;
 }
 
-nav a {
+nav a r
   display: inline-block;
   margin: 1em;
 }
@@ -18,9 +31,27 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+} */
+
+#nav-bar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 10%;
 }
 
-.cart section {
+#cart {
+  display: flex;
+  flex-direction: column;
+  min-width: 15%;
+  height: 100%;
+  background-color: rgb(255, 253, 253);
+  border-right: 1px solid gray;
+  text-align: center;
+  position: fixed;
+}
+
+#cart section {
   width: 20%;
   height: 100%;
   float: left;
