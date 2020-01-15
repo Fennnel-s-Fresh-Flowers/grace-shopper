@@ -6,6 +6,7 @@ import Checkout from './checkout'
 class Cart extends React.Component {
   render() {
     const items = this.props.cartItems
+
     return (
       <div id="cart">
         <section>
@@ -36,7 +37,7 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {cartItems: state.user.cart}
+  return {cartItems: state.orders.all}
 }
 
 export default connect(mapStateToProps, null)(Cart)
