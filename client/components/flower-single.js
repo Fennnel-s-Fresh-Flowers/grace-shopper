@@ -1,7 +1,7 @@
 import React from 'react'
 import {getAFlower} from '../store/flowers'
 import {connect} from 'react-redux'
-import {addToCart} from '../store/user'
+import {addOrderItem} from '../store/orders'
 
 class SingleFlower extends React.Component {
   constructor() {
@@ -15,16 +15,15 @@ class SingleFlower extends React.Component {
   componentDidMount() {
     const {id} = this.props.match.params
     this.props.getAFlower(id)
-    //this.setState({quantity: 0})
   }
 
   handleSubmit(event) {
     //check form input validity here?
     event.preventDefault()
-    console.log('in cart handle submit', this.props)
+
     const {single} = this.props.flower
 
-    this.props.addToCart({
+    this.props.addOrderItem({
       name: single.name,
       price: single.price,
       imgUrl: single.imgUrl,
@@ -38,8 +37,6 @@ class SingleFlower extends React.Component {
   }
 
   render() {
-    console.log('props on single flower', this.props)
-    console.log('state on single flower', this.state)
     const {single} = this.props.flower
     return (
       <div className="single-flower">
@@ -57,7 +54,6 @@ class SingleFlower extends React.Component {
             value={this.state.quantity}
             onChange={this.handleChange}
           />
-          {/* <span>error message</span>  */}
           <button type="submit">Add to Cart</button>
         </form>
       </div>
@@ -72,7 +68,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAFlower: id => dispatch(getAFlower(id)),
-    addToCart: item => dispatch(addToCart(item))
+    addOrderItem: item => dispatch(addOrderItem(item))
   }
 }
 
