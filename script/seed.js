@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Flower, Cart} = require('../server/db/models')
+const {User, Flower, Order} = require('../server/db/models')
 
 const flowers = [
   {
@@ -59,7 +59,7 @@ const flowers = [
       'https://www.russianflora.com/images/products_r/350/russia/Roses-and-Radishes.jpg'
   }
 ]
-const carts = [
+const orders = [
   {
     quantity: 3
   },
@@ -78,8 +78,7 @@ const users = [
     address: '304 Duboce Ave, San Francisco, CA',
     phone: '415-418-8800',
     admin: true,
-    password: 'password1',
-    cartId: 1
+    password: 'password1'
   },
   {
     firstName: 'Ayana',
@@ -87,8 +86,7 @@ const users = [
     email: 'pug@gmail.com',
     address: '609 H Street, Washington, DC',
     phone: '202-418-6759',
-    password: '12345',
-    cartId: 2
+    password: '12345'
   },
   {
     firstName: 'Yoshi',
@@ -96,15 +94,14 @@ const users = [
     email: 'klein@gmail.com',
     address: '150 Charles Street, New York, NY',
     phone: '212-676-9892',
-    password: 'yoshi1',
-    cartId: 3
+    password: 'yoshi1'
   }
 ]
 
 async function seed() {
   await db.sync({force: true})
   await Flower.bulkCreate(flowers)
-  await Cart.bulkCreate(carts)
+  await Order.bulkCreate(orders)
   await User.bulkCreate(users)
 
   console.log('db synced!')
