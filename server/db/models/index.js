@@ -17,16 +17,15 @@ const OrderFlower = require('./orderFlower')
  * instead of: const User = require('../db/models/user')
  */
 
-Cart.hasOne(User)
-User.belongsTo(Cart)
+Order.hasOne(User)
+User.belongsTo(Order)
 
-Cart.belongsToMany(Flower, {
-  through: 'CartFlower'
+Order.belongsToMany(Flower, {
+  through: 'OrderFlower'
 })
-Flower.belongsToMany(Cart, {
-  through: 'CartFlower'
+Flower.belongsToMany(Order, {
+  through: 'OrderFlower'
 })
-
 
 module.exports = {
   User,
