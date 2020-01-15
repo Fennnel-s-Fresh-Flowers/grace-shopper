@@ -17,7 +17,7 @@ const OrderFlower = require('./orderFlower')
  * instead of: const User = require('../db/models/user')
  */
 
-Order.hasOne(User)
+Order.hasMany(User)
 User.belongsTo(Order)
 
 Order.belongsToMany(Flower, {
