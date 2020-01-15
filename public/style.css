@@ -17,7 +17,7 @@ body {
   /* color: #f2f2f2; */
   letter-spacing: 0.03em;
 }
-/* 
+/*
 a {
   text-decoration: none;
 }
@@ -70,3 +70,14 @@ form div {
   height: 100%;
   float: left;
 } */
+
+.single-flower {
+  display: flex;
+  align-content: stretch;
+}
+
+.quantity-box {
+  flex-direction: row;
+  align-content: stretch;
+  align-items: right;
+}
