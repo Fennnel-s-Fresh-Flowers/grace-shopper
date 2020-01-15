@@ -1,5 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link, Route} from 'react-router-dom'
+import Checkout from './checkout'
 
 class Cart extends React.Component {
   render() {
@@ -19,11 +21,12 @@ class Cart extends React.Component {
                 </div>
               ))}
 
-              <h4>Total: ${items.reduce((a, i) => a + i.price, 0) / 100}</h4>
+              <h4>Total: ${items.reduce((a, i) => a + +i.price, 0) / 100}</h4>
 
               <button type="button">EditCart</button>
 
-              <button type="button">CHECKOUT</button>
+              <Link to="/checkout">Check Out</Link>
+              <Route path="/checkout" component={Checkout} />
             </div>
           )}
         </section>
