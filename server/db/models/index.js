@@ -1,6 +1,7 @@
 const User = require('./user')
 const Flower = require('./flower')
-const Cart = require('./cart')
+const Order = require('./order')
+const OrderFlower = require('./orderFlower')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -26,8 +27,10 @@ Flower.belongsToMany(Cart, {
   through: 'CartFlower'
 })
 
+
 module.exports = {
   User,
   Flower,
-  Cart
+  Order,
+  OrderFlower
 }
