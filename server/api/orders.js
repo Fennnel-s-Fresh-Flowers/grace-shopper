@@ -1,13 +1,13 @@
 const router = require('express').Router()
-const {User, Flower, Cart} = require('../db/models')
+const {User, Flower, Order} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const carts = await Cart.findAll({
+    const order = await Order.findAll({
       include: [{model: Flower}, {model: User}]
     })
-    res.json(carts)
+    res.json(order)
   } catch (error) {
     next(error)
   }
@@ -16,10 +16,10 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
-    const cart = await Cart.findByPk(id, {
+    const order = await Order.findByPk(id, {
       include: [{model: Flower}, {model: User}]
     })
-    res.json(cart)
+    res.json(order)
   } catch (error) {
     next(error)
   }
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const flower = req.body
-    const addedFlower = await Cart.create(flower)
+    const addedFlower = await Order.create(flower)
     res.status(201).json(addedFlower)
   } catch (error) {
     next(error)
@@ -37,9 +37,9 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const cartFlower = await Cart.findByPk(req.params.id)
-    await cartFlower.update(req.body)
-    res.status(200).json(cartFlower)
+    const orderFlower = await Order.findByPk(req.params.id)
+    await orderFlower.update(req.body)
+    res.status(200).json(orderFlower)
   } catch (error) {
     next(error)
   }
@@ -47,7 +47,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    await Cart.destroy({
+    await Order.destroy({
       where: {
         id: req.params.id
       }
