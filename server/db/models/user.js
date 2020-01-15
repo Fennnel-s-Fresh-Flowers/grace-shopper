@@ -27,7 +27,11 @@ const User = db.define('user', {
     }
   },
   address: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   phone: {
     type: Sequelize.STRING
