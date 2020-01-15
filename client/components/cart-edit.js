@@ -1,12 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link, Route} from 'react-router-dom'
-import Checkout from './checkout'
 
 class Cart extends React.Component {
   render() {
     const items = this.props.cartItems
-
     return (
       <div id="cart">
         <section>
@@ -22,12 +19,11 @@ class Cart extends React.Component {
                 </div>
               ))}
 
-              <h4>Total: ${items.reduce((a, i) => a + +i.price, 0) / 100}</h4>
+              <h4>Total: ${items.reduce((a, i) => a + i.price, 0) / 100}</h4>
 
               <button type="button">EditCart</button>
 
-              <Link to="/checkout">Check Out</Link>
-              <Route path="/checkout" component={Checkout} />
+              <button type="button">CHECKOUT</button>
             </div>
           )}
         </section>
@@ -37,7 +33,7 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {cartItems: state.orders.all}
+  return {cartItems: state.user.cart}
 }
 
 export default connect(mapStateToProps, null)(Cart)
