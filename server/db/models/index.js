@@ -21,10 +21,10 @@ Order.hasOne(User)
 User.belongsTo(Order)
 
 Order.belongsToMany(Flower, {
-  through: 'OrderFlower'
+  through: OrderFlower
 })
 Flower.belongsToMany(Order, {
-  through: 'OrderFlower'
+  through: OrderFlower
 })
 
 module.exports = {
