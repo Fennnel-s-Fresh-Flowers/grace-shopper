@@ -15,10 +15,6 @@ const Order = db.define('order', {
   statusOpen: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
-  },
-  dateOfPurchase: {
-    type: Sequelize.DATE,
-    allowNull: true
   }
 })
 
