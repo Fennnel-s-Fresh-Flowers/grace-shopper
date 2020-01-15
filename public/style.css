@@ -56,9 +56,10 @@ form div {
 #cart {
   margin-left: 0px;
   min-width: 150px;
+  max-width: 155px;
   height: 100%;
   background-color: rgb(55, 107, 6);
-  border-right: 1px solid rgb(131, 7, 233);
+  border-right: 5px ridge rgb(131, 7, 233);
   text-align: center;
   position: fixed;
 }

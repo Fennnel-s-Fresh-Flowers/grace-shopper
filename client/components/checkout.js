@@ -10,7 +10,7 @@ class Checkout extends React.Component {
   }
 
   handleSubmit() {
-    //dispatch cart info.
+    //dispatch cart info Be sure to note that in the db this is the order table.
   }
   handleChange(evt) {
     //connect to store.
