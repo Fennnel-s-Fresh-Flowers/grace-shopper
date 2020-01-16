@@ -31,3 +31,10 @@ function isSelfOrAdmin(req, res, next) {
 //   }
 
 // }
+
+module.exports = {
+  //isLoggedin,
+  isAdmin,
+  isSelf,
+  isSelfOrAdmin
+}
