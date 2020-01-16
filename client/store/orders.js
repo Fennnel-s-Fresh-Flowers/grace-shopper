@@ -27,6 +27,24 @@ export const getAOrder = function(id) {
 
 //REDUCERS
 
+function helper(arr) {
+  if (!arr.length) return arr
+  let newArr = [arr[0]]
+  for (let i = 1; i < arr.length; i++) {
+    let elem = arr[i]
+    let result
+    for (let j = 0; j < newArr.length; j++) {
+      if (newArr[j].name === elem.name) {
+        newArr[j].quantity += elem.quantity
+        newArr[j].totalPrice += elem.totalPrice
+        result = true
+      }
+    }
+    if (!result) newArr.push(elem)
+  }
+  return newArr
+}
+
 export default function orderReducer(orders = {all: [], single: {}}, action) {
   switch (action.type) {
     case GOT_ALL_ORDERS:
@@ -34,8 +52,21 @@ export default function orderReducer(orders = {all: [], single: {}}, action) {
     case GOT_ONE_ORDER:
       return {...orders, single: action.order}
     case ADD_ORDER_ITEM:
-      return {...orders, all: [...orders.all, action.order]}
+      return {...orders, all: helper([...orders.all, action.order])}
     default:
       return orders
   }
 }
+
+// export default function orderReducer(orders = {all: {}, single: {}}, action) {
+//     switch (action.type) {
+//       case GOT_ALL_ORDERS:
+//         return {...orders, all: action.orders}
+//       case GOT_ONE_ORDER:
+//         return {...orders, single: action.order}
+//       case ADD_ORDER_ITEM:
+//         return {...orders, all: [...orders.all, action.order]}
+//       default:
+//         return orders
+//     }
+//   }

@@ -6,7 +6,6 @@ import {addOrderItem} from '../store/orders'
 class SingleFlower extends React.Component {
   constructor() {
     super()
-
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.state = {quantity: 1}
@@ -26,10 +25,11 @@ class SingleFlower extends React.Component {
     this.props.addOrderItem({
       name: single.name,
       price: single.price,
-      imgUrl: single.imgUrl,
-      quantity: this.state.quantity,
+      quantity: +this.state.quantity,
+      totalPrice: single.price * +this.state.quantity,
       id: single.id
     })
+    this.setState({quantity: 1})
   }
 
   handleChange(event) {
@@ -62,7 +62,9 @@ class SingleFlower extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {flower: state.flowers}
+  return {
+    flower: state.flowers
+  }
 }
 
 const mapDispatchToProps = dispatch => {
