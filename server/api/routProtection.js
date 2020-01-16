@@ -1,24 +1,26 @@
+const error = new Error('Invalid Action')
+
 function isAdmin(req, res, next) {
-  if (req.user.admin) {
-    return next()
+  if (!req.user.admin) {
+    return next(error)
   } else {
-    res.redirect('/') //maybe to login page
+    return next()
   }
 }
 
 function isSelf(req, res, next) {
-  if (req.params.id == req.user.id) {
-    return next()
+  if (req.params.id != req.user.id) {
+    return next(error)
   } else {
-    res.redirect('/login')
+    return next()
   }
 }
 
 function isSelfOrAdmin(req, res, next) {
-  if (req.params.id == req.user.id || req.user.admin) {
-    return next()
+  if (req.params.id != req.user.id || !req.user.admin) {
+    return next(error)
   } else {
-    res.redirect('/login')
+    return next()
   }
 }
 
@@ -31,6 +33,8 @@ function isSelfOrAdmin(req, res, next) {
 //   }
 
 // }
+
+//Write a user id - cart id that will check that the user /session/req. line up so that we garentee that random post requests dont fly.
 
 module.exports = {
   //isLoggedin,
