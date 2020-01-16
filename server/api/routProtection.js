@@ -1,27 +1,37 @@
-const error = new Error('Invalid Action')
-
 function isAdmin(req, res, next) {
-  if (!req.user.admin) {
-    return next(error)
-  } else {
-    return next()
-  }
+  if (req.user === undefined) {
+    res.redirect(
+      'https://cdn.shopify.com/s/files/1/0322/6897/files/404-permalink.png?432866230176278629'
+    )
+  } else if (!req.user && !req.user.admin) {
+      return res.redirect('/')
+    } else {
+      return next()
+    }
 }
 
 function isSelf(req, res, next) {
-  if (req.params.id != req.user.id) {
-    return next(error)
-  } else {
-    return next()
-  }
+  if (req.user === undefined) {
+    res.redirect(
+      'https://cdn.shopify.com/s/files/1/0322/6897/files/404-permalink.png?432866230176278629'
+    )
+  } else if (req.params.id != req.user.id) {
+      return res.redirect('/')
+    } else {
+      return next()
+    }
 }
 
 function isSelfOrAdmin(req, res, next) {
-  if (req.params.id != req.user.id || !req.user.admin) {
-    return next(error)
-  } else {
-    return next()
-  }
+  if (req.user === undefined) {
+    res.redirect(
+      'https://cdn.shopify.com/s/files/1/0322/6897/files/404-permalink.png?432866230176278629'
+    )
+  } else if (req.params.id != req.user.id || !req.user.admin) {
+      return res.redirect('/')
+    } else {
+      return next()
+    }
 }
 
 //Need to write a loggedin function that has to do with authentication of user
