@@ -32,10 +32,10 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (userObj, method) => async dispatch => {
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await axios.post(`/auth/${method}`, userObj)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
@@ -65,9 +65,6 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
-    //   return {...state, single: action.user}
-    // case ADD_TO_CART:
-    //   return {...state, cart: [...state.cart, action.item]}
     case REMOVE_USER:
       return defaultUser
     default:

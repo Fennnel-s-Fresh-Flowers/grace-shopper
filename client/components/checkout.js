@@ -1,71 +1,72 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
+const defaultState = {firstName: '', lastName: '', address: ''}
+
 class Checkout extends React.Component {
   constructor() {
     super()
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+
+    this.state = defaultState
   }
 
-  handleSubmit() {
-    //dispatch cart info Be sure to note that in the db this is the order table.
+  handleSubmit(event) {
+    event.preventDefault()
+
+    //send order to db!!
+
+    //status: guest //find or create in db???
+
+    this.setState(defaultState)
   }
+
   handleChange(evt) {
-    //connect to store.
+    this.setState({[evt.target.name]: evt.target.value})
   }
 
   render() {
-    // const items = this.props.cartItems
-    const {user} = this.props
-
+    console.log('user and cart on props', this.props)
+    const user = this.props.user.all
     return (
-      <div>
-        {/* <h3>Your Order:</h3>
-        {items.map(item => (
-          <div key={item.id}>
-            <div>{`Item: ${item.name}`}</div>
-            <div>{`Quantity: ${item.quantity}`}</div>
-          </div>
-        ))}
-        <button type="button">Edit Cart</button>
-
-        <h4>Total: ${items.reduce((a, i) => a + i.price, 0) / 100}</h4> */}
-
-        <h3>Your Billing Information:</h3>
-        <form>
-          <div>
-            <label htmlFor="email">
-              <small>firstName</small>
-            </label>
-            <input name="firstName" value={this.handleChange} type="text" />
-          </div>
-          <div>
-            <label htmlFor="lastName">
-              <small>lastName</small>
-            </label>
-            <input name="lastName" value={this.handleChange} type="text" />
-          </div>
-          <div>
-            <label htmlFor="address">
-              <small>Address</small>
-            </label>
-            <input name="address" value={this.handleChange} type="text" />
-          </div>
-
-          <h3>Submit Order:</h3>
-          <button type="button" onClick={this.handleSubmit}>
-            SUBMIT ORDER
-          </button>
-        </form>
+      <div className="checkout">
+        {user ? (
+          `${user.firtName} ${user.lastName} \n ${user.address}`
+        ) : (
+          <form className="guest-form" onSubmit={this.handleSubmit}>
+            <label htmlFor="firstName">First Name</label>
+            <input
+              name="firstName"
+              type="name"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              name="lastName"
+              type="name"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="address">Address</label>
+            <input
+              name="address"
+              type="name"
+              value={this.state.address}
+              onChange={this.handleChange}
+            />
+            <button type="submit">Place Order</button>
+          </form>
+        )}
       </div>
     )
   }
 }
 
 const maptStateToProps = state => {
-  return {cartItems: state.user.cart, user: state.user.single}
+  return {cartItems: state.orders.all, user: state.user}
 }
 
 // const mapDispatchToProps = dispatch => {
