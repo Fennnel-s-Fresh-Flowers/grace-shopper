@@ -19,7 +19,6 @@ class SingleFlower extends React.Component {
   }
 
   handleSubmit(event) {
-    //check form input validity here?
     event.preventDefault()
 
     const {single} = this.props.flower

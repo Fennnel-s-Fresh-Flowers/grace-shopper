@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Flower} = require('../db/models')
+const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const inputs = req.body
     const newFlower = await Flower.create(inputs)
@@ -45,7 +46,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     await Flower.destroy({
       where: {

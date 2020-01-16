@@ -1,14 +1,16 @@
 const router = require('express').Router()
+const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
 const {User} = require('../db/models')
+
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'email', 'cartId']
+      attributes: ['id', 'email']
     })
     res.json(users)
   } catch (err) {
@@ -16,7 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isSelfOrAdmin, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
@@ -38,7 +40,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isSelfOrAdmin, async (req, res, next) => {
   try {
     const user = await User.findByPk(+req.params.id)
     if (!user) return res.status(404).json('No such user at our store!')
@@ -49,7 +51,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isSelfOrAdmin, async (req, res, next) => {
   try {
     await User.destroy({
       where: {

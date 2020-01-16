@@ -1,8 +1,9 @@
 const router = require('express').Router()
+const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
 const {User, Flower, Order, OrderFlower} = require('../db/models')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findAll({
       include: [{model: Flower}, {model: User}]
