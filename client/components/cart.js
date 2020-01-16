@@ -7,7 +7,7 @@ import CartEdit from './cart-edit'
 class Cart extends React.Component {
   render() {
     const items = this.props.cartItems
-
+    console.log('IN CART', items)
     return (
       <div id="cart">
         <section>
@@ -27,14 +27,11 @@ class Cart extends React.Component {
                 Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
               </h4>
 
-              {/* <button type="button">Edit Cart</button> */}
-              {/* <Switch> */}
               <Link to="/cart-edit">Edit Cart</Link>
               <Route path="/cart-edit" component={CartEdit} />
 
               <Link to="/checkout">Check Out</Link>
               <Route path="/checkout" component={Checkout} />
-              {/* </Switch> */}
             </div>
           )}
         </section>

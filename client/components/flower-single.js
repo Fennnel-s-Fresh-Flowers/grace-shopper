@@ -8,7 +8,9 @@ class SingleFlower extends React.Component {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.state = {quantity: 1}
+    this.state = {
+      quantity: 1
+    }
   }
 
   componentDidMount() {
@@ -25,8 +27,8 @@ class SingleFlower extends React.Component {
       name: single.name,
       price: single.price,
       quantity: +this.state.quantity,
-      totalPrice: single.price * +this.state.quantity,
-      id: single.id
+      totalPrice: single.price * +this.state.quantity
+      // id: single.id
     })
     this.setState({quantity: 1})
   }
