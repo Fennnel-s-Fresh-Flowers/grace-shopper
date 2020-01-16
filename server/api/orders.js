@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
-const {User, Flower, Order} = require('../db/models')
+const {User, Flower, Order, OrderFlower} = require('../db/models')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
