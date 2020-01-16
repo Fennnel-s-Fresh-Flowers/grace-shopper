@@ -16,7 +16,6 @@ export const getAllFlowers = function() {
 }
 
 export const getAFlower = function(id) {
-  console.log('in the single flower thunk')
   return async dispatch => {
     const {data} = await axios.get(`/api/flowers/${id}`)
     dispatch(gotOneFlower(data))

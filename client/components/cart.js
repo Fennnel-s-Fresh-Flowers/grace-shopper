@@ -23,7 +23,9 @@ class Cart extends React.Component {
                 </div>
               ))}
 
-              <h4>Total: ${items.reduce((a, i) => a + +i.price, 0) / 100}</h4>
+              <h4>
+                Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
+              </h4>
 
               {/* <button type="button">Edit Cart</button> */}
               {/* <Switch> */}
