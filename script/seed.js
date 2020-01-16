@@ -69,7 +69,7 @@ const orders = [
     userId: 2
   },
   {
-    total: 276000,
+    total: 386000,
     userId: 3
   }
 ]
@@ -92,6 +92,18 @@ const orderFlowers = [
     pricePerUnit: 69000,
     orderId: 3,
     flowerId: 3
+  },
+  {
+    quantity: 1,
+    pricePerUnit: 50000,
+    orderId: 3,
+    flowerId: 4
+  },
+  {
+    quantity: 1,
+    pricePerUnit: 60000,
+    orderId: 3,
+    flowerId: 5
   }
 ]
 
