@@ -84,3 +84,17 @@ form div {
   align-content: stretch;
   align-items: right;
 }
+
+/* Error Page Styling */
+#errPg {
+  background-color: #f7f7f7;
+  background-image: url('./errorPage.png');
+  background-repeat: no-repeat;
+}
+
+#backImg {
+  max-width: 5%;
+  height: auto;
+  align: center;
+  position: bottom;
+}
