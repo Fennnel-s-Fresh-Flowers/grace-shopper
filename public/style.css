@@ -1,13 +1,14 @@
-body {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Open Sans', arial, sans-serif;
-  padding-bottom: 56px;
+html * {
   margin: 0;
-  height: 100vh;
-  width: 100vw;
+  padding: 0;
+}
+
+body {
+  /* display: flex;
+  flex-direction: column; */
+  font-family: 'Open Sans', arial, sans-serif;
+  margin: 0;
   background: linear-gradient(45deg, rgb(43, 107, 1), rgb(4, 172, 26));
-  background-attachment: fixed;
   color: black;
   letter-spacing: 0.03em;
 }
@@ -54,18 +55,16 @@ form div {
 }
 
 #cart {
-  margin-left: 0px;
-  min-width: 150px;
-  max-width: 155px;
+  width: 18%;
   height: 100%;
-  background-color: rgb(55, 107, 6);
-  border-right: 5px ridge rgb(131, 7, 233);
+  background: linear-gradient(10deg, #d2bba0, #9f7e69);
   text-align: center;
   position: fixed;
+  border-radius: 0px 15px 15px 0px;
 }
 
 #everything {
-  margin-left: 155px;
+  margin-left: 19%;
 }
 
 /* #cart section {
