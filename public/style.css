@@ -8,7 +8,11 @@ body {
   flex-direction: column; */
   font-family: 'Open Sans', arial, sans-serif;
   margin: 0;
-  background: linear-gradient(45deg, rgb(43, 107, 1), rgb(4, 172, 26));
+  background: linear-gradient(
+    40deg,
+    rgba(193, 244, 206, 1),
+    rgba(249, 246, 234, 1)
+  );
   color: black;
   letter-spacing: 0.03em;
 }
@@ -55,19 +59,23 @@ form div {
 }
 
 #cart {
-  width: 18%;
+  width: 16%;
   height: 100%;
-  background: linear-gradient(10deg, #d2bba0, #9f7e69);
+  background: linear-gradient(
+    10deg,
+    rgba(249, 246, 234, 1),
+    rgba(255, 207, 206, 1)
+  );
   text-align: center;
   position: fixed;
   border-radius: 0px 15px 15px 0px;
   border-radius: 8px;
   border-style: outset;
-  box-shadow: 3px 6px #613d1f;
+  box-shadow: 2px 8px #660a4f;
 }
 
 #everything {
-  margin-left: 19%;
+  margin-left: 17%;
 }
 
 /* #cart section {
@@ -102,8 +110,17 @@ form div {
 }
 
 #title {
-  border-radius: 8px;
+  /* border-radius: 10px;
   border-style: outset;
-  box-shadow: 2px 5px #6d4423;
+  box-shadow: 7px 3px rgb(101, 35, 114); */
   text-align: center;
+}
+
+#title-text {
+  display: inline-block;
+  border-radius: 10px;
+  border-style: outset;
+  box-shadow: 2px 2px rgb(101, 35, 114);
+  /* text-align: center; */
+  padding: 1px;
 }
