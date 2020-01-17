@@ -105,14 +105,11 @@ form div {
 #backImg {
   max-width: 5%;
   height: auto;
-  /* align: center; */
   position: bottom;
 }
 
+/* title styling */
 #title {
-  /* border-radius: 10px;
-  border-style: outset;
-  box-shadow: 7px 3px rgb(101, 35, 114); */
   text-align: center;
 }
 
@@ -121,6 +118,18 @@ form div {
   border-radius: 10px;
   border-style: outset;
   box-shadow: 2px 2px rgb(101, 35, 114);
-  /* text-align: center; */
   padding: 1px;
+}
+
+/* flower page styling */
+.flower-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.flower-image {
+  height: 25em;
+  width: 20em;
 }
