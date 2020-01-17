@@ -61,6 +61,9 @@ form div {
   text-align: center;
   position: fixed;
   border-radius: 0px 15px 15px 0px;
+  border-radius: 8px;
+  border-style: outset;
+  box-shadow: 2px 5px #6d4423;
 }
 
 #everything {
@@ -94,6 +97,13 @@ form div {
 #backImg {
   max-width: 5%;
   height: auto;
-  align: center;
+  /* align: center; */
   position: bottom;
+}
+
+#title {
+  border-radius: 8px;
+  border-style: outset;
+  box-shadow: 2px 5px #6d4423;
+  text-align: center;
 }
