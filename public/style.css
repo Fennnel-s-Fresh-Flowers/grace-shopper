@@ -1,12 +1,11 @@
 html * {
   margin: 0;
   padding: 0;
+  font-style: cursive;
 }
 
 body {
-  /* display: flex;
-  flex-direction: column; */
-  font-family: 'Open Sans', arial, sans-serif;
+  font-style: cursive;
   margin: 0;
   background: linear-gradient(
     40deg,
@@ -17,28 +16,9 @@ body {
   letter-spacing: 0.03em;
 }
 
-/*
-a {
-  text-decoration: none;
-}
-
-label {
-  display: block;
-}
-
-nav a r
-  display: inline-block;
-  margin: 1em;
-}
-form div {
-  margin: 1em;
-  display: inline-block;
-} */
-
 #home {
   display: flex;
   flex-direction: column;
-  /* align-items: stretch; */
   justify-content: space-between;
 }
 
@@ -46,10 +26,6 @@ form div {
   align-items: center;
 }
 
-#nav-pair {
-  justify-content: space-between;
-  width: 50%;
-}
 #nav-bar {
   display: flex;
   flex-direction: row-reverse;
@@ -77,12 +53,6 @@ form div {
 #everything {
   margin-left: 17%;
 }
-
-/* #cart section {
-  width: 20%;
-  height: 100%;
-  float: left;
-} */
 
 .single-flower {
   display: flex;
@@ -114,11 +84,17 @@ form div {
 }
 
 #title-text {
+  font-family: 'Fira Sans';
   display: inline-block;
   border-radius: 10px;
   border-style: outset;
   box-shadow: 2px 2px rgb(101, 35, 114);
   padding: 1px;
+  background: linear-gradient(
+    10deg,
+    rgba(193, 155, 201, 1),
+    rgba(255, 207, 206, 1)
+  );
 }
 
 /* flower page styling */
