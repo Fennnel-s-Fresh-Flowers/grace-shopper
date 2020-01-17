@@ -16,12 +16,21 @@ class Cart extends React.Component {
             <span>Your Cart Is Empty</span>
           ) : (
             <div>
-              {items.map(item => (
+              <ul>
+                {items.map((item, index) => (
+                  <li key={index}>
+                    {`Item: ${item.name}\n \n Quantity: ${item.quantity}`}
+                    {/* {`Quantity: ${item.quantity}`} */}
+                  </li>
+                ))}
+              </ul>
+
+              {/* {items.map(item => (
                 <div key={item.id}>
                   <li>{`Item: ${item.name}`}</li>
                   <li>{`Quantity: ${item.quantity}`}</li>
                 </div>
-              ))}
+              ))} */}
 
               <h4>
                 Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
@@ -41,7 +50,9 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {cartItems: state.orders.all}
+  return {
+    cartItems: state.orders.all
+  }
 }
 
 export default connect(mapStateToProps, null)(Cart)

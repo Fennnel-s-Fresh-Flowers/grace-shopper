@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Home, AllFlowers} from './components'
 import {me} from './store'
 import SingleFlower from './components/flower-single'
+import App from './app'
 
 /**
  * COMPONENT
