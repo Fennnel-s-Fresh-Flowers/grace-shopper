@@ -1,39 +1,24 @@
-body {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Open Sans', arial, sans-serif;
-  padding-bottom: 56px;
+html * {
   margin: 0;
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(45deg, rgb(43, 107, 1), rgb(4, 172, 26));
-  background-attachment: fixed;
+  padding: 0;
+  font-style: cursive;
+}
+
+body {
+  font-style: cursive;
+  margin: 0;
+  background: linear-gradient(
+    40deg,
+    rgba(193, 244, 206, 1),
+    rgba(249, 246, 234, 1)
+  );
   color: black;
   letter-spacing: 0.03em;
 }
 
-/*
-a {
-  text-decoration: none;
-}
-
-label {
-  display: block;
-}
-
-nav a r
-  display: inline-block;
-  margin: 1em;
-}
-form div {
-  margin: 1em;
-  display: inline-block;
-} */
-
 #home {
   display: flex;
   flex-direction: column;
-  /* align-items: stretch; */
   justify-content: space-between;
 }
 
@@ -41,10 +26,6 @@ form div {
   align-items: center;
 }
 
-#nav-pair {
-  justify-content: space-between;
-  width: 50%;
-}
 #nav-bar {
   display: flex;
   flex-direction: row-reverse;
@@ -54,25 +35,24 @@ form div {
 }
 
 #cart {
-  margin-left: 0px;
-  min-width: 150px;
-  max-width: 155px;
+  width: 16%;
   height: 100%;
-  background-color: rgb(55, 107, 6);
-  border-right: 5px ridge rgb(131, 7, 233);
+  background: linear-gradient(
+    10deg,
+    rgba(249, 246, 234, 1),
+    rgba(255, 207, 206, 1)
+  );
   text-align: center;
   position: fixed;
+  border-radius: 0px 15px 15px 0px;
+  border-radius: 8px;
+  border-style: outset;
+  box-shadow: 2px 8px #660a4f;
 }
 
 #everything {
-  margin-left: 155px;
+  margin-left: 17%;
 }
-
-/* #cart section {
-  width: 20%;
-  height: 100%;
-  float: left;
-} */
 
 .single-flower {
   display: flex;
@@ -95,6 +75,37 @@ form div {
 #backImg {
   max-width: 5%;
   height: auto;
-  align: center;
   position: bottom;
+}
+
+/* title styling */
+#title {
+  text-align: center;
+}
+
+#title-text {
+  font-family: 'Fira Sans';
+  display: inline-block;
+  border-radius: 10px;
+  border-style: outset;
+  box-shadow: 2px 2px rgb(101, 35, 114);
+  padding: 1px;
+  background: linear-gradient(
+    10deg,
+    rgba(193, 155, 201, 1),
+    rgba(255, 207, 206, 1)
+  );
+}
+
+/* flower page styling */
+.flower-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.flower-image {
+  height: 25em;
+  width: 20em;
 }
