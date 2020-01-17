@@ -7,18 +7,13 @@ class CartEdit extends React.Component {
     super()
     this.state = {
       quantity: 0
-      //   roses: 3
     }
-    console.log('IN CONSTRUCTOR', this.state)
+
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    //   console.log('IN CDM', this.props)
-    //   const items = this.props.cartItems
-    //   this.setState({item: 2})
-    //   console.log('IN CDM STATE', this.state)
     const newState = {}
     this.props.cartItems.forEach(flower => {
       newState[flower.name] = flower.quantity
@@ -29,33 +24,22 @@ class CartEdit extends React.Component {
   handleSubmit(event) {
     //dispatch cart info Be sure to note that in the db this is the order table.
     event.preventDefault()
-    const items = this.props.cartItems
+    const items = [...this.props.cartItems]
+    // this.setState(items)
     items.forEach(flower => {
-      flower.quantity = this.state[flower.name]
+      flower.quantity = +this.state[flower.name]
       flower.totalPrice = flower.price * flower.quantity
     })
-    // console.log('SUBMIT', items)
+
     this.props.updateOrder(items)
     this.props.history.push('/')
-    // this.setState({
-    //     newCampusName: "",
-    //     newCampusAddress: ""
-    // })
-    console.log('SUBMIT', this.props)
   }
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
-    // this.setState({
-    //   item: [...this.state.item, {[event.target.name]: event.target.value}]
-    // })
   }
 
   render() {
-    console.log('HEEEEEERE STATE', this.state)
-
     const items = this.props.cartItems
-    console.log('HEEEEEERE ITEMS', items)
-    // const items = [{roses: 2}]
     return (
       <div id="edit-cart">
         <h3>Edit Your Cart:</h3>
@@ -99,7 +83,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateOrder: item => dispatch(updateOrder(item))
+    updateOrder: item => {
+      dispatch(updateOrder(item)) //.then(() => {
+      //     history.push('/')
+      //   })
+      //   ownProps.history.push('/')
+    }
   }
 }
 
