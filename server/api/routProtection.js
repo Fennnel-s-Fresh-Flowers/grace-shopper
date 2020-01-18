@@ -1,8 +1,8 @@
 function isAdmin(req, res, next) {
   if (!req.user) {
-    res.redirect('/')
+    res.redirect('/error')
   } else if (!req.user && !req.user.admin) {
-    return res.redirect('/')
+    return res.redirect('/error')
   } else {
     return next()
   }
@@ -10,9 +10,9 @@ function isAdmin(req, res, next) {
 
 function isSelf(req, res, next) {
   if (!req.user) {
-    res.redirect('/')
+    res.redirect('/error')
   } else if (req.params.id != req.user.id) {
-    return res.redirect('/')
+    return res.redirect('/error')
   } else {
     return next()
   }
@@ -20,9 +20,9 @@ function isSelf(req, res, next) {
 
 function isSelfOrAdmin(req, res, next) {
   if (!req.user) {
-    res.redirect('/')
+    res.redirect('/error')
   } else if (req.params.id != req.user.id || !req.user.admin) {
-    return res.redirect('/')
+    return res.redirect('/error')
   } else {
     return next()
   }
