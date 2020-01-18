@@ -4,16 +4,17 @@ module.exports = router
 
 router.post('/login', async (req, res, next) => {
   try {
+    console.log('IN LOGIN ROUTE', req.body)
     const user = await User.findOne({
       where: {
-        email: req.body.email,
-        password: req.body.password
+        email: req.body.email
       }
     })
+    console.log('user login data: ', user)
     if (!user) {
-      res.status(401).send('Wrong username and/or password')
+      res.status(401).send('No such user')
     } else if (!user.correctPassword(req.body.password)) {
-      res.status(401).send('Wrong username and/or password')
+      res.status(401).send('Incorrect password')
     } else {
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
