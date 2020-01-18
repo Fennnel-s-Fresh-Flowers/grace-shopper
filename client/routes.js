@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Home, AllFlowers, NotFound} from './components'
+import {Login, Signup, UserHome, Home, AllFlowers} from './components'
 import {me} from './store'
 import SingleFlower from './components/flower-single'
+import NotFound from './components/not-found'
 import App from './app'
 
 /**
@@ -34,7 +35,7 @@ class Routes extends Component {
         )}
 
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* <Route component={Login} /> */}
         <Route path="*" component={NotFound} />
       </Switch>
     )

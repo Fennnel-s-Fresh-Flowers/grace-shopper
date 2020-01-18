@@ -1,18 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import errorPage from '../../public/errorPage.png'
+// import errorImg from '../../public/bundle/errorPage.jpg' //currently having webpack issues with this
 const NotFound = () => (
-  <div>
-    <img
-      src={errorPage}
-      style={{
-        width: 400,
-        height: 400,
-        display: 'block',
-        margin: 'auto',
-        position: 'relative'
-      }}
-    />
+  <div id="error-page">
+    <img src="../../public/errorPage.jpg" />
     <center>
       <Link to="/">Return to Home Page</Link>
     </center>

@@ -160,3 +160,12 @@ body {
 .single-flower > p {
   font-size: 20px;
 }
+
+#error-page > img {
+  background-image: url(./errorPage.jpg);
+  width: 400;
+  height: 400;
+  display: 'block';
+  margin: 'auto';
+  position: 'relative';
+}
