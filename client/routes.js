@@ -34,6 +34,7 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
+        {/* <Route path='*' component={NotFound}/> will add error page route here. */}
       </Switch>
     )
   }
