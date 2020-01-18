@@ -25,13 +25,14 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/flowers/:id" component={SingleFlower} />
         <Route path="/flowers" component={AllFlowers} />
-        <Route path="/" component={Home} />
+        <Route path="/home" component={Home} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/userHome" component={UserHome} />
           </Switch>
         )}
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>

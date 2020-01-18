@@ -20,7 +20,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <a>Settings</a>
+          {/* <a>Settings</a> */}
         </div>
       ) : (
         <div className="nav-pair">
