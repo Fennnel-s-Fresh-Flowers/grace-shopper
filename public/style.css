@@ -26,12 +26,19 @@ body {
   align-items: center;
 }
 
+/* Navbar */
 #nav-bar {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;
   width: 60%;
   align-items: center;
+}
+
+#nav-hr {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 #cart {
