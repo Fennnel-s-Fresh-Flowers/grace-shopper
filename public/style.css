@@ -144,8 +144,9 @@ body {
 .single-flower {
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-around;
+  align-items: stretch;
 }
 .single-flower > img {
   margin-top: 20px;
@@ -154,4 +155,8 @@ body {
   border-radius: 10px;
   border-style: ridge;
   padding: 0px;
+}
+
+.single-flower > p {
+  font-size: 20px;
 }
