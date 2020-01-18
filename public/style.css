@@ -139,3 +139,19 @@ body {
   border-style: ridge;
   padding: 0px;
 }
+
+/* single flower page styling */
+.single-flower {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+.single-flower > img {
+  margin-top: 20px;
+  height: 35em;
+  width: 30em;
+  border-radius: 10px;
+  border-style: ridge;
+  padding: 0px;
+}
