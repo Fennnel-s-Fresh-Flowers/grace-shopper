@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+
 html * {
   margin: 0;
   padding: 0;
-  font-style: cursive;
+  font-family: 'Indie Flower', cursive;
 }
 
 body {
-  font-style: cursive;
   margin: 0;
   background: linear-gradient(
     40deg,
@@ -23,15 +24,40 @@ body {
 }
 
 #home-img {
+  display: inline-block;
+  border-radius: 10px;
+  border-style: ridge;
+  padding: 0px;
+}
+
+/* Navbar */
+#nav-bar {
+  font-size: 25px;
+  padding-top: 1em;
+  text-align: center;
+  width: 100%;
   align-items: center;
 }
 
-#nav-bar {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-around;
-  width: 60%;
-  align-items: center;
+.nav-pair {
+  display: inline-block;
+}
+
+.nav-pair > a {
+  border-radius: 15px;
+  border-style: outset;
+  margin: 1em;
+  background: linear-gradient(
+    10deg,
+    rgba(193, 155, 201, 1),
+    rgba(255, 207, 206, 1)
+  );
+}
+
+#nav-hr {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 #cart {
@@ -84,8 +110,8 @@ body {
 }
 
 #title-text {
-  font-family: 'Fira Sans';
   display: inline-block;
+  font-size: 3.5rem;
   border-radius: 10px;
   border-style: outset;
   box-shadow: 2px 2px rgb(101, 35, 114);
@@ -95,6 +121,7 @@ body {
     rgba(193, 155, 201, 1),
     rgba(255, 207, 206, 1)
   );
+  margin-bottom: 15px;
 }
 
 /* flower page styling */
@@ -108,4 +135,28 @@ body {
 .flower-image {
   height: 25em;
   width: 20em;
+  border-radius: 10px;
+  border-style: ridge;
+  padding: 0px;
+}
+
+/* single flower page styling */
+.single-flower {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.single-flower > img {
+  margin-top: 20px;
+  height: 35em;
+  width: 30em;
+  border-radius: 10px;
+  border-style: ridge;
+  padding: 0px;
+}
+
+.single-flower > p {
+  font-size: 20px;
 }
