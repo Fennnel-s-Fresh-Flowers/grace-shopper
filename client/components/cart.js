@@ -7,7 +7,7 @@ import CartEdit from './cart-edit'
 class Cart extends React.Component {
   render() {
     const items = this.props.cartItems
-    console.log('IN CART', items)
+    // console.log('IN CART', items)
     return (
       <div id="cart">
         <section>
@@ -17,30 +17,32 @@ class Cart extends React.Component {
           ) : (
             <div>
               <ul>
-                {items.map((item, index) => (
-                  <li key={index}>
-                    {`Item: ${item.name}\n \n Quantity: ${item.quantity}`}
-                    {/* {`Quantity: ${item.quantity}`} */}
-                  </li>
-                ))}
+                {items
+                  .filter(item => item.quantity > 0)
+                  .map((item, index) => (
+                    <li key={index}>
+                      {`Item: ${item.name}\n \n Quantity: ${item.quantity}`}
+                    </li>
+                  ))}
               </ul>
 
-              {/* {items.map(item => (
-                <div key={item.id}>
-                  <li>{`Item: ${item.name}`}</li>
-                  <li>{`Quantity: ${item.quantity}`}</li>
+              {!items.reduce((a, i) => a + +i.totalPrice, 0) ? (
+                <span>Your Cart Is Empty</span>
+              ) : (
+                <div>
+                  <h4>
+                    Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
+                  </h4>
+                  <p>
+                    <Link to="/cart-edit">Edit Cart</Link>
+                    <Route path="/cart-edit" component={CartEdit} />
+                  </p>
+                  <p>
+                    <Link to="/checkout">Check Out</Link>
+                    <Route path="/checkout" component={Checkout} />
+                  </p>
                 </div>
-              ))} */}
-
-              <h4>
-                Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
-              </h4>
-
-              <Link to="/cart-edit">Edit Cart</Link>
-              <Route path="/cart-edit" component={CartEdit} />
-
-              <Link to="/checkout">Check Out</Link>
-              <Route path="/checkout" component={Checkout} />
+              )}
             </div>
           )}
         </section>

@@ -40,12 +40,13 @@ class CartEdit extends React.Component {
 
   render() {
     const items = this.props.cartItems
+    // console.log('IN EDIT CART', items)
     return (
       <div id="edit-cart">
         <h3>Edit Your Cart:</h3>
         <form>
           {/* <div> */}
-          {items.map((item, index) => (
+          {items.filter(item => item.quantity > 0).map((item, index) => (
             <div key={index}>
               <label htmlFor="cartItem">
                 <small>{item.name}</small>
