@@ -22,12 +22,24 @@ class SingleFlower extends React.Component {
     event.preventDefault()
 
     const {single} = this.props.flower
-
+    // console.log(  //WILL POTENTIALLY WORK ON THIS IF WE HAVE TIME
+    //   'HEEERE',
+    //   'SINGLE:',
+    //   single,
+    //   'QUANTITY:',
+    //   this.state.quantity,
+    //   'ORDERS:',
+    //   this.props.orders
+    // )
+    //   if (this.props.orders + this.state.quantity > single.stock) {
+    //     this.state.quantity = single.stock)
+    //   }
     this.props.addOrderItem({
       name: single.name,
       price: single.price,
       quantity: +this.state.quantity,
-      totalPrice: single.price * +this.state.quantity
+      totalPrice: single.price * +this.state.quantity,
+      stock: single.stock
       // id: single.id
     })
     this.setState({quantity: 1})
@@ -65,6 +77,7 @@ class SingleFlower extends React.Component {
 const mapStateToProps = state => {
   return {
     flower: state.flowers
+    // orders: state.orders.all
   }
 }
 

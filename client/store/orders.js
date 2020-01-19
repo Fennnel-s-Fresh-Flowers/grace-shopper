@@ -56,7 +56,7 @@ export default function orderReducer(orders = {all: [], single: {}}, action) {
     case ADD_ORDER_ITEM:
       return {...orders, all: helper([...orders.all, action.order])}
     case UPDATE_ORDER:
-      return {...orders, all: action.order}
+      return {...orders, all: action.order.filter(item => item.quantity > 0)}
     default:
       return orders
   }
