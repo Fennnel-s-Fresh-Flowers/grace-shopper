@@ -17,12 +17,14 @@ const AuthForm = props => {
             <small>Email</small>
           </label>
           <input name="email" type="text" />
+          <small>(required)</small>
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
           <input name="password" type="password" />
+          <small>(required)</small>
         </div>
         {name === 'signup' ? (
           <div>
@@ -31,18 +33,26 @@ const AuthForm = props => {
                 <small>First Name</small>
               </label>
               <input name="firstName" type="text" />
+              <small>(required)</small>
             </div>
             <div>
               <label htmlFor="lastName">
                 <small>Last Name</small>
               </label>
               <input name="lastName" type="text" />
+              <small>(required)</small>
             </div>
             <div>
               <label htmlFor="address">
                 <small>Address</small>
               </label>
               <input name="address" type="text" />
+            </div>
+            <div>
+              <label htmlFor="phone">
+                <small>Phone Number</small>
+              </label>
+              <input name="phone" type="text" />
             </div>
           </div>
         ) : (
