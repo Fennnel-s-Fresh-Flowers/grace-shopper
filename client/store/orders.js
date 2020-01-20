@@ -27,6 +27,15 @@ export const getAOrder = function(id) {
   }
 }
 
+export const addOrderToSession = function(orderItem) {
+  const sentItem = []
+  sentItem.push(orderItem) //using spread was serving an error
+  console.log('in add order to session thunk. Order item: ', orderItem)
+  return async dispatch => {
+    await axios.post(`/api/orders/`, sentItem)
+  }
+}
+
 //REDUCERS
 
 function helper(arr) {

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
-const {User, Flower, Order, OrderFlower} = require('../db/models')
+const {User, Flower, Order} = require('../db/models')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
@@ -26,15 +26,39 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    const flower = req.body
-    const addedFlower = await Order.create(flower)
-    res.status(201).json(addedFlower)
-  } catch (error) {
-    next(error)
+router.post('/', (req, res, next) => {
+  if (!req.session.cart) {
+    req.session.cart = []
   }
+  const cart = req.session.cart
+  // console.log('body name: ', req.body[0].name)
+  // console.log('cart: ', cart)
+  // console.log('includes', cart[0].name === req.body[0].name)
+  for (let i = 0; i <= cart.length; i++) {
+    // console.log('the names: ', cart[i].name)
+    if (i === cart.length) {
+      cart[i] = req.body[0]
+      break
+    }
+    if (cart[i].name === req.body[0].name && i < cart.length) {
+      // console.log('in the cart for loop if statement')
+      cart[i].quantity += req.body[0].quantity
+      break
+    }
+  }
+  console.log('cart after loop: ', cart)
+  res.json(cart)
 })
+
+// router.post('/', async (req, res, next) => {
+//   try {
+//     const flower = req.body
+//     const addedFlower = await Order.create(flower)
+//     res.status(201).json(addedFlower)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.put('/:id', async (req, res, next) => {
   try {
