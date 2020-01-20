@@ -1,13 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link, Route, Switch} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
 import Checkout from './checkout'
 import CartEdit from './cart-edit'
+import {getOrderFromSession} from '../store/orders'
 
 class Cart extends React.Component {
+  componentDidMount() {
+    this.props.getOrderFromSession()
+  }
+
   render() {
-    const items = this.props.cartItems
-    // console.log('IN CART', items)
+    const items = this.props.orderItems
+    // console.log('IN CART!!!!!!!!', this.props)
     return (
       <div id="cart">
         <section>
@@ -33,14 +38,14 @@ class Cart extends React.Component {
                   <h4>
                     Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
                   </h4>
-                  <p>
+                  <div>
                     <Link to="/cart-edit">Edit Cart</Link>
                     <Route path="/cart-edit" component={CartEdit} />
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     <Link to="/checkout">Check Out</Link>
                     <Route path="/checkout" component={Checkout} />
-                  </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -53,8 +58,16 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.orders.all
+    orderItems: state.orders.session
   }
 }
 
-export default connect(mapStateToProps, null)(Cart)
+const mapDispatchToProps = dispatch => {
+  return {
+    getOrderFromSession: () => {
+      dispatch(getOrderFromSession())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

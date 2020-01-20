@@ -22,7 +22,7 @@ class SingleFlower extends React.Component {
     event.preventDefault()
 
     const {single} = this.props.flower
-    // console.log(  //WILL POTENTIALLY WORK ON THIS IF WE HAVE TIME
+    // console.log(  //WILL POTENTIALLY WORK ON THIS IF WE HAVE TIME prevent adding quantity above stock after Edit Cart
     //   'HEEERE',
     //   'SINGLE:',
     //   single,
@@ -85,7 +85,6 @@ class SingleFlower extends React.Component {
 const mapStateToProps = state => {
   return {
     flower: state.flowers
-    // orders: state.orders.all
   }
 }
 
