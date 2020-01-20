@@ -1,7 +1,7 @@
 import React from 'react'
 import {getAFlower} from '../store/flowers'
 import {connect} from 'react-redux'
-import {addOrderItem} from '../store/orders'
+import {addOrderItem, addOrderToSession} from '../store/orders'
 
 class SingleFlower extends React.Component {
   constructor() {
@@ -35,6 +35,14 @@ class SingleFlower extends React.Component {
     //     this.state.quantity = single.stock)
     //   }
     this.props.addOrderItem({
+      name: single.name,
+      price: single.price,
+      quantity: +this.state.quantity,
+      totalPrice: single.price * +this.state.quantity,
+      stock: single.stock
+      // id: single.id
+    })
+    this.props.addOrderToSession({
       name: single.name,
       price: single.price,
       quantity: +this.state.quantity,
@@ -84,7 +92,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAFlower: id => dispatch(getAFlower(id)),
-    addOrderItem: item => dispatch(addOrderItem(item))
+    addOrderItem: item => dispatch(addOrderItem(item)),
+    addOrderToSession: item => dispatch(addOrderToSession(item))
   }
 }
 
