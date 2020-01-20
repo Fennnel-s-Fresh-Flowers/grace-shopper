@@ -1,19 +1,35 @@
 import {expect} from 'chai'
 import React from 'react'
 import enzyme, {shallow} from 'enzyme'
+import {Provider} from 'react-redux'
 import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
+import SingleFlower from './flower-single'
+import configureMockStore from 'redux-mock-store'
+import thunkMiddleware from 'redux-thunk'
+const middlewares = [thunkMiddleware]
+const mockStore = configureMockStore(middlewares)
+const initialState = {
+  orders: {
+    single: {},
+    all: [{name: 'tulip', quantity: 4}, {name: 'lilly', quantity: 8}]
+  }
+}
 
-import {SingleFlower} from './flower-single'
+const store = mockStore(initialState)
 
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('<SingleFlower /> component', () => {
+describe('SingleFlower component', () => {
   let renderedSingleFlower
   let singleFlowerInstance
   beforeEach(() => {
-    renderedSingleFlower = shallow(<SingleFlower />)
+    renderedSingleFlower = shallow(
+      <Provider store={store}>
+        <SingleFlower />
+      </Provider>
+    )
     singleFlowerInstance = renderedSingleFlower.instance()
   })
 
