@@ -25,7 +25,7 @@ class CartEdit extends React.Component {
     //dispatch cart info Be sure to note that in the db this is the order table.
     event.preventDefault()
     const items = [...this.props.cartItems]
-    // this.setState(items)
+
     items.forEach(flower => {
       flower.quantity = +this.state[flower.name]
       flower.totalPrice = flower.price * flower.quantity
@@ -35,40 +35,34 @@ class CartEdit extends React.Component {
     this.props.history.push('/')
   }
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    if (+event.target.value > +event.target.max) {
+      event.target.value = +event.target.max
+    }
+    this.setState({[event.target.name]: +event.target.value})
   }
 
   render() {
     const items = this.props.cartItems
-    // console.log('IN EDIT CART', items)
+
     return (
       <div id="edit-cart">
         <h3>Edit Your Cart:</h3>
         <form>
-          {/* <div> */}
           {items.filter(item => item.quantity > 0).map((item, index) => (
             <div key={index}>
               <label htmlFor="cartItem">
                 <small>{item.name}</small>
               </label>
               <input
-                // name="quantity"
+                min="0"
+                max={item.stock}
                 name={item.name}
-                // value={item.quantity}
                 value={this.state[item.name]}
                 onChange={this.handleChange}
                 type="number"
               />
             </div>
           ))}
-
-          {/* <label htmlFor="cartItem">
-              <small>firstName</small>
-            </label>
-            <input name="firstName" value={this.handleChange} type="text" /> */}
-          {/* </div> */}
-
-          {/* <h3>Save New Cart:</h3> */}
           <button type="button" onClick={this.handleSubmit}>
             SAVE
           </button>
