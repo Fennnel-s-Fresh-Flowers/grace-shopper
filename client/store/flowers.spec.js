@@ -1,53 +1,51 @@
 import {expect} from 'chai'
-import React from 'react'
-import enzyme, {shallow} from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import sinon from 'sinon'
+import {getAllFlowers, getAFlower} from './flowers'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
+
 const middlewares = [thunkMiddleware]
 const mockStore = configureMockStore(middlewares)
-const initialState = {
-  all: [],
-  single: {}
-}
-const store = mockStore(initialState)
 
-import reducer, {GOT_ALL_FLOWERS, getAFlower} from './flowers'
+describe('thunk creators', () => {
+  let store
+  let mockAxios
 
-describe('flowers reducer', () => {
-  const newState = reducer(initialState, {
-    type: GOT_ALL_FLOWERS,
-    all: 'flowers'
+  const initialState = {
+    all: [],
+    single: {}
+  }
+
+  beforeEach(() => {
+    mockAxios = new MockAdapter(axios)
+    store = mockStore(initialState)
   })
 
-  it('returns a new state with the updated `flowers`', () => {
-    // this should have changed:
-    expect(newState.campuses).to.deep.equal('flowers')
-    // this should not have changed:
-    expect(newState.single).to.equal(initialState.single)
+  afterEach(() => {
+    mockAxios.restore()
+    store.clearActions()
   })
 
-  it('does not modify the previous state', () => {
-    expect(initialState).to.deep.equal({
-      all: [],
-      single: {}
+  describe('getAllFlowers', () => {
+    it('eventually dispatches the GOT_ALL_FLOWERS action', async () => {
+      const fakeFlowers = [{name: 'rose'}, {name: 'tulip'}]
+      mockAxios.onGet('/api/flowers').replyOnce(200, fakeFlowers)
+      await store.dispatch(getAllFlowers())
+      const actions = store.getActions()
+      expect(actions[0].type).to.be.equal('GOT_ALL_FLOWERS')
+      expect(actions[0].flowers).to.be.deep.equal(fakeFlowers)
     })
   })
-})
 
-const flowers = [{name: 'daisy'}, {name: 'tulip'}, {name: 'rose'}]
-
-describe('setting multiple flowers', () => {
-  describe('`getAFlower` thunk creator', () => {
-    it('returns a thunk to fetch flowers from the backend and dispatch a GOT_ONE_ACTION action', async () => {
-      mock.onGet('/api/flowers').replyOnce(200, flowers)
-      await store.dispatch(getAFlower())
+  describe('getAFlower', () => {
+    it('eventually dispatches the GOT_ONE_FLOWER action', async () => {
+      const fakeFlower = {name: 'lilly'}
+      mockAxios.onGet('/api/flowers/1').replyOnce(204, fakeFlower)
+      await store.dispatch(getAFlower(1))
       const actions = store.getActions()
-      expect(actions[0].type).to.equal('SET_CAMPUSES')
-      expect(actions[0].all).to.deep.equal(flowers)
+      expect(actions[0].type).to.be.equal('GOT_ONE_FLOWER')
+      expect(actions[0].flower).to.be.deep.equal(fakeFlower)
     })
   })
 })
