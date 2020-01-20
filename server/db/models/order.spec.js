@@ -14,13 +14,13 @@ describe('Order model', () => {
 
     beforeEach(async () => {
       order = await Order.create({
-        quantity: 13
+        total: 13
       })
     })
 
     it('returns the correct quantity', () => {
-      expect(order.quantity).to.be.equal(13)
-      expect(order.quantity).to.be.an('number')
+      expect(order.total).to.be.equal(13)
+      expect(order.total).to.be.an('number')
     })
   })
 })

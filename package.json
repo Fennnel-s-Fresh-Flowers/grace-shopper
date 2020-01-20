@@ -83,6 +83,8 @@
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "chai-things": "^0.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^5.16.0",

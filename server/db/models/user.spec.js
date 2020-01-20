@@ -17,7 +17,8 @@ describe('User model', () => {
         email: 'cody@puppybook.com',
         password: 'bones',
         firstName: 'cody',
-        lastName: 'puggy'
+        lastName: 'puggy',
+        address: 'address'
       })
     })
 
@@ -45,7 +46,8 @@ describe('User model', () => {
           email: 'cody@puppybook.com',
           password: 'bones',
           firstName: 'cody',
-          lastName: 'puggy'
+          lastName: 'puggy',
+          address: 'home'
         })
       })
 
