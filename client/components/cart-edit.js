@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateOrder} from '../store/orders'
+import {updateOrderInSession} from '../store/orders'
 
 class CartEdit extends React.Component {
   constructor() {
@@ -15,7 +15,7 @@ class CartEdit extends React.Component {
 
   componentDidMount() {
     const newState = {}
-    this.props.cartItems.forEach(flower => {
+    this.props.orderItems.forEach(flower => {
       newState[flower.name] = flower.quantity
     })
     this.setState(newState)
@@ -24,16 +24,16 @@ class CartEdit extends React.Component {
   handleSubmit(event) {
     //dispatch cart info Be sure to note that in the db this is the order table.
     event.preventDefault()
-    const items = [...this.props.cartItems]
-
+    const items = [...this.props.orderItems]
     items.forEach(flower => {
       flower.quantity = +this.state[flower.name]
       flower.totalPrice = flower.price * flower.quantity
     })
-
-    this.props.updateOrder(items)
-    this.props.history.push('/')
+    const filteredItems = items.filter(item => item.quantity > 0)
+    this.props.updateOrderInSession(filteredItems)
+    this.props.history.push('/flowers')
   }
+
   handleChange(event) {
     if (+event.target.value > +event.target.max) {
       event.target.value = +event.target.max
@@ -42,12 +42,11 @@ class CartEdit extends React.Component {
   }
 
   render() {
-    const items = this.props.cartItems
-
+    const items = this.props.orderItems
     return (
       <div id="edit-cart">
         <h3>Edit Your Cart:</h3>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           {items.filter(item => item.quantity > 0).map((item, index) => (
             <div key={index}>
               <label htmlFor="cartItem">
@@ -63,9 +62,7 @@ class CartEdit extends React.Component {
               />
             </div>
           ))}
-          <button type="button" onClick={this.handleSubmit}>
-            SAVE
-          </button>
+          <button type="submit">SAVE</button>
         </form>
       </div>
     )
@@ -73,19 +70,15 @@ class CartEdit extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {cartItems: state.orders.all}
+  return {
+    orderItems: state.orders.session
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateOrder: item => {
-      dispatch(updateOrder(item)) //.then(() => {
-      //     history.push('/')
-      //   })
-      //   ownProps.history.push('/')
-    }
+    updateOrderInSession: item => dispatch(updateOrderInSession(item))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartEdit)
-// export default CartEdit
