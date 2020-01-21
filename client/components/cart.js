@@ -4,7 +4,6 @@ import {Link, Route} from 'react-router-dom'
 import Checkout from './checkout'
 import CartEdit from './cart-edit'
 import {getOrderFromSession} from '../store/orders'
-import GuestCheckout from './guest-checkout'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -12,13 +11,8 @@ class Cart extends React.Component {
   }
 
   render() {
-    const user = this.props.user
     const items = this.props.orderItems
-    //the funciton below calulates the total cost of all items by adding separate item totals togather in the 'accumulator'
-    const totalCost = items.reduce(
-      (accumulator, item) => accumulator + +item.totalPrice,
-      0
-    )
+    // console.log('IN CART!!!!!!!!', this.props)
     return (
       <div id="cart">
         <section>
@@ -28,7 +22,6 @@ class Cart extends React.Component {
           ) : (
             <div>
               <ul>
-                {/* the function below removes items with no quantity before mapping a list of them */}
                 {items
                   .filter(item => item.quantity > 0)
                   .map((item, index) => (
@@ -38,37 +31,21 @@ class Cart extends React.Component {
                   ))}
               </ul>
 
-              {!totalCost ? (
+              {!items.reduce((a, i) => a + +i.totalPrice, 0) ? (
                 <span>Your Cart Is Empty</span>
               ) : (
                 <div>
-                  <h4>Total: ${totalCost / 100}</h4>
+                  <h4>
+                    Total: ${items.reduce((a, i) => a + +i.totalPrice, 0) / 100}
+                  </h4>
                   <div>
                     <Link to="/cart-edit">Edit Cart</Link>
                     <Route path="/cart-edit" component={CartEdit} />
                   </div>
-                  {user && user.id ? (
-                    <div>
-                      <Link to="/checkout">Check Out</Link>
-                      <Route path="/checkout" component={Checkout} />
-                    </div>
-                  ) : (
-                    <div>
-                      <div>
-                        <Link to="/login">Log In</Link>
-                      </div>
-                      <div>
-                        <Link to="/signup">Sign Up</Link>
-                      </div>
-                      <div>
-                        <Link to="/guest-checkout">Check Out As Guest</Link>
-                        <Route
-                          path="/guest-checkout"
-                          component={GuestCheckout}
-                        />
-                      </div>
-                    </div>
-                  )}
+                  <div>
+                    <Link to="/checkout">Check Out</Link>
+                    <Route path="/checkout" component={Checkout} />
+                  </div>
                 </div>
               )}
             </div>
@@ -81,8 +58,7 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    orderItems: state.orders.session,
-    user: state.user
+    orderItems: state.orders.session
   }
 }
 
