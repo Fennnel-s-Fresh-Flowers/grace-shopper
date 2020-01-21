@@ -11,7 +11,7 @@ function isAdmin(req, res, next) {
 function isSelf(req, res, next) {
   if (!req.user) {
     res.redirect('/error')
-  } else if (req.params.id != req.user.id) {
+  } else if (req.params.id !== req.user.id) {
     return res.redirect('/error')
   } else {
     return next()
@@ -21,7 +21,7 @@ function isSelf(req, res, next) {
 function isSelfOrAdmin(req, res, next) {
   if (!req.user) {
     res.redirect('/error')
-  } else if (req.params.id != req.user.id || !req.user.admin) {
+  } else if (req.params.id !== req.user.id || !req.user.admin) {
     return res.redirect('/error')
   } else {
     return next()

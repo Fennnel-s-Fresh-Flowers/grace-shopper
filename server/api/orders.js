@@ -3,11 +3,19 @@ const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
 const {User, Flower, Order} = require('../db/models')
 module.exports = router
 
-router.get('/', isAdmin, async (req, res, next) => {
+// router.get('/', isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
+  // try {
+  //   const order = await Order.findAll({
+  //     include: [{model: Flower}, {model: User}]
+  //   })
+  //   res.json(order)
+  // } catch (error) {
+  //   next(error)
+  // }
   try {
-    const order = await Order.findAll({
-      include: [{model: Flower}, {model: User}]
-    })
+    const order = await req.session.cart
+    console.log('HEEEEEEERE', req.session)
     res.json(order)
   } catch (error) {
     next(error)
@@ -43,10 +51,11 @@ router.post('/', (req, res, next) => {
     if (cart[i].name === req.body[0].name && i < cart.length) {
       // console.log('in the cart for loop if statement')
       cart[i].quantity += req.body[0].quantity
+      cart[i].totalPrice += req.body[0].totalPrice
       break
     }
   }
-  console.log('cart after loop: ', cart)
+  console.log('cart after loop: ', req.session)
   res.json(cart)
 })
 
@@ -60,15 +69,21 @@ router.post('/', (req, res, next) => {
 //   }
 // })
 
-router.put('/:id', async (req, res, next) => {
-  try {
-    const orderFlower = await Order.findByPk(req.params.id)
-    await orderFlower.update(req.body)
-    res.status(200).json(orderFlower)
-  } catch (error) {
-    next(error)
-  }
+router.put('/', (req, res, next) => {
+  req.session.cart = req.body
+  console.log('in put request: ', req.session)
+  res.json(req.session.cart)
 })
+
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const orderFlower = await Order.findByPk(req.params.id)
+//     await orderFlower.update(req.body)
+//     res.status(200).json(orderFlower)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.delete('/:id', async (req, res, next) => {
   try {

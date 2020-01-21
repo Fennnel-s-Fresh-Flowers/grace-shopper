@@ -5,19 +5,25 @@ const GOT_ALL_ORDERS = 'GOT_ALL_ORDERS'
 const GOT_ONE_ORDER = 'GOT_ONE_ORDER'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const UPDATE_ORDER = 'UPDATE_ORDER'
+const GOT_ORDER_FROM_SESSION = 'GOT_ORDER_FROM_SESSION'
+const ADDED_ORDER_TO_SESSION = 'ADD_ORDER_TO_SESSION'
+const UPDATED_ORDER_IN_SESSION = 'UPDATED_ORDER_IN_SESSION'
 
 //ACTION CREATORS
 const gotAllOrders = orders => ({type: GOT_ALL_ORDERS, orders})
 const gotOneOrder = order => ({type: GOT_ONE_ORDER, order})
+const gotOrderFromSession = order => ({type: GOT_ORDER_FROM_SESSION, order})
+const addedOrderToSession = order => ({type: ADDED_ORDER_TO_SESSION, order})
+const updatedOrderInSession = order => ({type: UPDATED_ORDER_IN_SESSION, order})
 export const addOrderItem = order => ({type: ADD_ORDER_ITEM, order})
 export const updateOrder = order => ({type: UPDATE_ORDER, order})
 
-export const getAllOrders = function() {
-  return async dispatch => {
-    const {data} = await axios.get('/api/orders')
-    dispatch(gotAllOrders(data))
-  }
-}
+// export const getAllOrders = function() {
+//   return async dispatch => {
+//     const {data} = await axios.get('/api/orders')
+//     dispatch(gotAllOrders(data))
+//   }
+// }
 
 export const getAOrder = function(id) {
   console.log('in the single order thunk')
@@ -30,9 +36,29 @@ export const getAOrder = function(id) {
 export const addOrderToSession = function(orderItem) {
   const sentItem = []
   sentItem.push(orderItem) //using spread was serving an error
-  console.log('in add order to session thunk. Order item: ', orderItem)
+  //   console.log('in add order to session thunk. Order item: ', orderItem)
+  //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
-    await axios.post(`/api/orders/`, sentItem)
+    const {data} = await axios.post(`/api/orders/`, sentItem)
+    dispatch(addedOrderToSession(data))
+  }
+}
+
+export const updateOrderInSession = function(order) {
+  // const sentItem = []
+  // sentItem.push(orderItem) //using spread was serving an error
+  //   console.log('in add order to session thunk. Order item: ', orderItem)
+  //   console.log('HEEEEEERE', sentItem)
+  return async dispatch => {
+    const {data} = await axios.put(`/api/orders/`, order)
+    dispatch(updatedOrderInSession(data))
+  }
+}
+
+export const getOrderFromSession = function() {
+  return async dispatch => {
+    const {data} = await axios.get('/api/orders')
+    dispatch(gotOrderFromSession(data))
   }
 }
 
@@ -56,7 +82,10 @@ function helper(arr) {
   return newArr
 }
 
-export default function orderReducer(orders = {all: [], single: {}}, action) {
+export default function orderReducer(
+  orders = {all: [], session: [], single: {}},
+  action
+) {
   switch (action.type) {
     case GOT_ALL_ORDERS:
       return {...orders, all: action.orders}
@@ -66,6 +95,12 @@ export default function orderReducer(orders = {all: [], single: {}}, action) {
       return {...orders, all: helper([...orders.all, action.order])}
     case UPDATE_ORDER:
       return {...orders, all: action.order.filter(item => item.quantity > 0)}
+    case ADDED_ORDER_TO_SESSION:
+      return {...orders, session: action.order}
+    case GOT_ORDER_FROM_SESSION:
+      return {...orders, session: action.order}
+    case UPDATED_ORDER_IN_SESSION:
+      return {...orders, session: action.order}
     default:
       return orders
   }
