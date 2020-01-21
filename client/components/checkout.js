@@ -1,5 +1,8 @@
 import React from 'react'
+import {Link, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
+import GuestCheckout from './guest-checkout'
+import {addOrderItem} from '../store/orders'
 
 const defaultState = {firstName: '', lastName: '', address: ''}
 
@@ -23,7 +26,7 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-
+    addOrderItem()
     this.setState(defaultState)
   }
 
@@ -45,7 +48,10 @@ class Checkout extends React.Component {
             </button>
           </form>
         ) : (
-          <h1>HEEEEERE</h1>
+          <div>
+            <h1>HEEERRE</h1>
+            <Link to="/guest-checkout">Check Out As Guest</Link>
+          </div>
         )}
 
         {/* {user ? (
@@ -88,8 +94,12 @@ const maptStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {} //place order //update state quantity and cart
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    addOrderItem: item => {
+      dispatch(addOrderItem(item))
+    }
+  } //place order //update state quantity and cart
+}
 
-export default connect(maptStateToProps, null)(Checkout)
+export default connect(maptStateToProps, mapDispatchToProps)(Checkout)

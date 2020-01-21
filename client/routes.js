@@ -6,6 +6,7 @@ import {Login, Signup, UserHome, Home, AllFlowers} from './components'
 import {me} from './store'
 import SingleFlower from './components/flower-single'
 import NotFound from './components/not-found'
+import GuestCheckout from './components/guest-checkout'
 import App from './app'
 
 /**
@@ -28,6 +29,7 @@ class Routes extends Component {
         <Route path="/flowers" component={AllFlowers} />
         <Route path="/cart-edit" component={AllFlowers} />
         <Route path="/checkout" component={AllFlowers} />
+        <Route path="/guest-checkout" component={AllFlowers} />
         <Route path="/home" component={Home} />
         {isLoggedIn && (
           <Switch>
