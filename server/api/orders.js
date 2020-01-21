@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
-const {User, Flower, Order} = require('../db/models')
+const {User, Flower, Order, OrderFlower} = require('../db/models')
 module.exports = router
 
 // router.get('/', isAdmin, async (req, res, next) => {
@@ -30,8 +30,35 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const flower = req.body
-    const addedFlower = await Order.create(flower)
-    res.status(201).json(addedFlower)
+    let orderObj = {}
+    orderObj.total = flower.reduce(
+      (accumulator, increment) => accumulator + +increment.totalPrice,
+      0
+    )
+    orderObj.statusOpen = false
+    if (req.session.passport && req.session.passport.user) {
+      orderObj.userId = req.session.passport.user
+    }
+    const addedOrder = await Order.create(orderObj)
+    console.log('req.session in order post: ', req.session)
+
+    for (let i = 0; i < flower.length; i++) {
+      let orderItem = flower[i]
+      orderItem.orderId = addedOrder.id
+      orderItem.pricePerUnit = orderItem.price
+      const addedFlowerOrder = await OrderFlower.create(orderItem)
+      const flowerQuantityUpdate = await Flower.update(
+        {
+          stock: orderItem.stock - orderItem.quantity
+        },
+        {
+          where: {id: orderItem.flowerId},
+          returning: true,
+          plain: true
+        }
+      )
+    }
+    res.status(201).json()
   } catch (error) {
     next(error)
   }
