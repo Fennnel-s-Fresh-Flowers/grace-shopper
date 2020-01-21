@@ -28,6 +28,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  console.log('POOOOOSTING')
   try {
     const flower = req.body
     let orderObj = {}

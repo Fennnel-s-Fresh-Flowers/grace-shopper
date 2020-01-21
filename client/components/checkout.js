@@ -26,7 +26,7 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    addOrderItem()
+    addOrderItem(this.props.orderItems)
     this.setState(defaultState)
   }
 
@@ -35,10 +35,10 @@ class Checkout extends React.Component {
   // }
 
   render() {
-    console.log('user and cart on props', this.props)
+    // console.log('user and cart on props', this.props)
     const user = this.props.user
     const items = this.props.orderItems
-    console.log('items', items)
+    // console.log('items', items)
     return (
       <div className="checkout">
         {user && user.id ? (
@@ -49,7 +49,7 @@ class Checkout extends React.Component {
           </form>
         ) : (
           <div>
-            <h1>HEEERRE</h1>
+            {/* <h1>HEEERRE</h1> */}
             <Link to="/guest-checkout">Check Out As Guest</Link>
           </div>
         )}
