@@ -108,10 +108,12 @@ const mapDispatch = dispatch => {
         userObj = {
           firstName: evt.target.firstName.value,
           lastName: evt.target.lastName.value,
-          address: evt.target.email.value,
+          address: evt.target.address.value,
           email: evt.target.email.value,
-          password: evt.target.password.value
+          password: evt.target.password.value,
+          phone: evt.target.phone.value
         }
+      console.log('userObj in auth form submit: ', userObj)
 
       dispatch(auth(userObj, formName))
     }
