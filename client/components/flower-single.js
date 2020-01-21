@@ -34,21 +34,21 @@ class SingleFlower extends React.Component {
     //   if (this.props.orders + this.state.quantity > single.stock) {
     //     this.state.quantity = single.stock)
     //   }
-    this.props.addOrderItem({
-      name: single.name,
-      price: single.price,
-      quantity: +this.state.quantity,
-      totalPrice: single.price * +this.state.quantity,
-      stock: single.stock
-      // id: single.id
-    })
+    // this.props.addOrderItem({
+    //   name: single.name,
+    //   price: single.price,
+    //   quantity: +this.state.quantity,
+    //   totalPrice: single.price * +this.state.quantity,
+    //   stock: single.stock,
+    //   id: single.id
+    // })
     this.props.addOrderToSession({
       name: single.name,
       price: single.price,
       quantity: +this.state.quantity,
       totalPrice: single.price * +this.state.quantity,
-      stock: single.stock
-      // id: single.id
+      stock: single.stock,
+      flowerId: single.id
     })
     this.setState({quantity: 1})
   }
