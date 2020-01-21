@@ -8,31 +8,47 @@ class Checkout extends React.Component {
     super()
 
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
 
     this.state = defaultState
   }
 
+  // componentDidMount() {
+  //   // const newState = {}
+  //   // this.props.orderItems.forEach(flower => {
+  //   //   newState[flower.name] = flower.quantity
+  //   // })
+  //   // this.setState(newState)
+  // }
+
   handleSubmit(event) {
     event.preventDefault()
-
-    //send order to db!!
-
-    //status: guest //find or create in db???
 
     this.setState(defaultState)
   }
 
-  handleChange(evt) {
-    this.setState({[evt.target.name]: evt.target.value})
-  }
+  // handleChange(evt) {
+  //   this.setState({[evt.target.name]: evt.target.value})
+  // }
 
   render() {
     console.log('user and cart on props', this.props)
-    const user = this.props.user.all
+    const user = this.props.user
+    const items = this.props.orderItems
+    console.log('items', items)
     return (
       <div className="checkout">
-        {user ? (
+        {user && user.id ? (
+          <form className="guest-form" onSubmit={this.handleSubmit}>
+            <button type="submit" disabled={!items.length}>
+              Place Order
+            </button>
+          </form>
+        ) : (
+          <h1>HEEEEERE</h1>
+        )}
+
+        {/* {user ? (
           `${user.firtName} ${user.lastName} \n ${user.address}`
         ) : (
           <form className="guest-form" onSubmit={this.handleSubmit}>
@@ -59,14 +75,17 @@ class Checkout extends React.Component {
             />
             <button type="submit">Place Order</button>
           </form>
-        )}
+        )} */}
       </div>
     )
   }
 }
 
 const maptStateToProps = state => {
-  return {cartItems: state.orders.all, user: state.user}
+  return {
+    orderItems: state.orders.session,
+    user: state.user
+  }
 }
 
 // const mapDispatchToProps = dispatch => {
