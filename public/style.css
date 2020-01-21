@@ -169,3 +169,10 @@ body {
   margin: 'auto';
   position: 'relative';
 }
+
+.o-auth-button {
+  background-color: blue;
+  color: #ffffff;
+  border-radius: 3px;
+  text-align: center;
+}

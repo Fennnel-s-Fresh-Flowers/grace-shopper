@@ -1,7 +1,7 @@
 function isAdmin(req, res, next) {
   if (!req.user) {
     res.redirect('/error')
-  } else if (!req.user && !req.user.admin) {
+  } else if (!req.user.admin) {
     return res.redirect('/error')
   } else {
     return next()
