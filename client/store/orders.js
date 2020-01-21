@@ -30,11 +30,16 @@ const addedOrderItem = order => ({type: ADDED_ORDER_ITEM, order})
 // }
 
 export const addOrderItem = function(order) {
-  // console.log(order)
+  //   try {
+  console.log('IN REDUCER', order)
   return async dispatch => {
-    const {data} = await axios.get(`/api/orders/`, order)
+    console.log('IN DISPATCH')
+    const {data} = await axios.post('/api/orders', order)
     dispatch(addedOrderItem(data))
   }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 }
 
 export const getAnOrder = function(id) {
