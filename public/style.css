@@ -169,3 +169,9 @@ body {
   margin: 'auto';
   position: 'relative';
 }
+
+.o-auth-button {
+  color: aquamarine;
+  border-radius: 3px;
+  text-align: center;
+}
