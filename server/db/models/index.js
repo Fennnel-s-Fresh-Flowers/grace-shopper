@@ -22,9 +22,13 @@ Order.belongsTo(User)
 
 Order.belongsToMany(Flower, {
   through: OrderFlower
+  // as: 'flowers',
+  // foreignKey: 'orderId'
 })
 Flower.belongsToMany(Order, {
   through: OrderFlower
+  // as: 'orders',
+  // foreignKey: 'flowerId'
 })
 
 module.exports = {

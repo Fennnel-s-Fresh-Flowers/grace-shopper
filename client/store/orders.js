@@ -25,7 +25,7 @@ export const updateOrder = order => ({type: UPDATE_ORDER, order})
 //   }
 // }
 
-export const getAOrder = function(id) {
+export const getAnOrder = function(id) {
   console.log('in the single order thunk')
   return async dispatch => {
     const {data} = await axios.get(`/api/orders/${id}`)
@@ -39,7 +39,7 @@ export const addOrderToSession = function(orderItem) {
   //   console.log('in add order to session thunk. Order item: ', orderItem)
   //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
-    const {data} = await axios.post(`/api/orders/`, sentItem)
+    const {data} = await axios.post(`/api/session/`, sentItem)
     dispatch(addedOrderToSession(data))
   }
 }
@@ -50,14 +50,14 @@ export const updateOrderInSession = function(order) {
   //   console.log('in add order to session thunk. Order item: ', orderItem)
   //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
-    const {data} = await axios.put(`/api/orders/`, order)
+    const {data} = await axios.put(`/api/session/`, order)
     dispatch(updatedOrderInSession(data))
   }
 }
 
 export const getOrderFromSession = function() {
   return async dispatch => {
-    const {data} = await axios.get('/api/orders')
+    const {data} = await axios.get('/api/session')
     dispatch(gotOrderFromSession(data))
   }
 }

@@ -84,7 +84,8 @@ class SingleFlower extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    flower: state.flowers
+    flower: state.flowers,
+    orderItems: state.orders.session
   }
 }
 
