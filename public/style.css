@@ -171,7 +171,8 @@ body {
 }
 
 .o-auth-button {
-  color: aquamarine;
+  background-color: blue;
+  color: #ffffff;
   border-radius: 3px;
   text-align: center;
 }
