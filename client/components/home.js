@@ -9,7 +9,7 @@ function Home() {
         src="https://www.gramercyflowers.com/v/vspfiles/assets/images/ABOUT_holiday_1.jpg"
       />
       <p>
-        Established in 1904, Fennel's Fresh Flowers continues to flourish as New
+        Established in 1903, Fennel's Fresh Flowers continues to flourish as New
         York City's oldest family owned and operated floral business. With the
         high standards initiated by his grandfather, owner Manny the Greek
         maintains the same level of quality and attention to detail that allowed
