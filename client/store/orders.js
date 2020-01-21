@@ -8,6 +8,7 @@ const UPDATE_ORDER = 'UPDATE_ORDER'
 const GOT_ORDER_FROM_SESSION = 'GOT_ORDER_FROM_SESSION'
 const ADDED_ORDER_TO_SESSION = 'ADD_ORDER_TO_SESSION'
 const UPDATED_ORDER_IN_SESSION = 'UPDATED_ORDER_IN_SESSION'
+const CLEAR_CART = 'CLEAR_CART'
 
 //ACTION CREATORS
 const gotAllOrders = orders => ({type: GOT_ALL_ORDERS, orders})
@@ -15,6 +16,9 @@ const gotOneOrder = order => ({type: GOT_ONE_ORDER, order})
 const gotOrderFromSession = order => ({type: GOT_ORDER_FROM_SESSION, order})
 const addedOrderToSession = order => ({type: ADDED_ORDER_TO_SESSION, order})
 const updatedOrderInSession = order => ({type: UPDATED_ORDER_IN_SESSION, order})
+
+export const clearCart = empty => ({type: CLEAR_CART, empty})
+
 export const addOrderItem = order => ({type: ADD_ORDER_ITEM, order})
 export const updateOrder = order => ({type: UPDATE_ORDER, order})
 
@@ -101,6 +105,8 @@ export default function orderReducer(
       return {...orders, session: action.order}
     case UPDATED_ORDER_IN_SESSION:
       return {...orders, session: action.order}
+    case CLEAR_CART:
+      return {...orders, session: action.empty}
     default:
       return orders
   }
