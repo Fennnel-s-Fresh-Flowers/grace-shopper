@@ -3,8 +3,8 @@ import axios from 'axios'
 //ACTION TYPES
 const GOT_ALL_ORDERS = 'GOT_ALL_ORDERS'
 const GOT_ONE_ORDER = 'GOT_ONE_ORDER'
-const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
-const UPDATE_ORDER = 'UPDATE_ORDER'
+const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
+// const UPDATE_ORDER = 'UPDATE_ORDER'
 const GOT_ORDER_FROM_SESSION = 'GOT_ORDER_FROM_SESSION'
 const ADDED_ORDER_TO_SESSION = 'ADD_ORDER_TO_SESSION'
 const UPDATED_ORDER_IN_SESSION = 'UPDATED_ORDER_IN_SESSION'
@@ -19,8 +19,8 @@ const updatedOrderInSession = order => ({type: UPDATED_ORDER_IN_SESSION, order})
 
 export const clearCart = empty => ({type: CLEAR_CART, empty})
 
-export const addOrderItem = order => ({type: ADD_ORDER_ITEM, order})
-export const updateOrder = order => ({type: UPDATE_ORDER, order})
+const addedOrderItem = order => ({type: ADDED_ORDER_ITEM, order})
+// export const updateOrder = order => ({type: UPDATE_ORDER, order})
 
 // export const getAllOrders = function() {
 //   return async dispatch => {
@@ -28,6 +28,14 @@ export const updateOrder = order => ({type: UPDATE_ORDER, order})
 //     dispatch(gotAllOrders(data))
 //   }
 // }
+
+export const addOrderItem = function(order) {
+  // console.log(order)
+  return async dispatch => {
+    const {data} = await axios.get(`/api/orders/`, order)
+    dispatch(addedOrderItem(data))
+  }
+}
 
 export const getAnOrder = function(id) {
   console.log('in the single order thunk')
@@ -95,10 +103,10 @@ export default function orderReducer(
       return {...orders, all: action.orders}
     case GOT_ONE_ORDER:
       return {...orders, single: action.order}
-    case ADD_ORDER_ITEM:
+    case ADDED_ORDER_ITEM:
       return {...orders, all: helper([...orders.all, action.order])}
-    case UPDATE_ORDER:
-      return {...orders, all: action.order.filter(item => item.quantity > 0)}
+    // case UPDATE_ORDER:
+    //   return {...orders, all: action.order.filter(item => item.quantity > 0)}
     case ADDED_ORDER_TO_SESSION:
       return {...orders, session: action.order}
     case GOT_ORDER_FROM_SESSION:
