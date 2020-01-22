@@ -91,6 +91,10 @@ body {
   align-items: right;
 }
 
+.order-images {
+  width: 20%;
+}
+
 /* Error Page Styling */
 #errPg {
   background-color: #f7f7f7;
