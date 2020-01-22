@@ -28,23 +28,25 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  // USER PERSISTENT IN DB
   console.log('POOOOOSTING')
   try {
-    const flower = req.body
+    const order = req.body
     let orderObj = {}
-    orderObj.total = flower.reduce(
+    orderObj.total = order.reduce(
       (accumulator, increment) => accumulator + +increment.totalPrice,
       0
     )
     orderObj.statusOpen = false
     if (req.session.passport && req.session.passport.user) {
       orderObj.userId = req.session.passport.user
+      orderObj.statusOpen = true
     }
     const addedOrder = await Order.create(orderObj)
     console.log('req.session in order post: ', req.session)
 
-    for (let i = 0; i < flower.length; i++) {
-      let orderItem = flower[i]
+    for (let i = 0; i < order.length; i++) {
+      let orderItem = order[i]
       orderItem.orderId = addedOrder.id
       orderItem.pricePerUnit = orderItem.price
       const addedFlowerOrder = await OrderFlower.create(orderItem)
@@ -65,11 +67,131 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+// router.post('/', async (req, res, next) => { // USER NOT PERSISTENT IN DB
+//   console.log('POOOOOSTING')
+//   try {
+//     const flower = req.body
+//     let orderObj = {}
+//     orderObj.total = flower.reduce(
+//       (accumulator, increment) => accumulator + +increment.totalPrice,
+//       0
+//     )
+//     orderObj.statusOpen = false
+//     if (req.session.passport && req.session.passport.user) {
+//       orderObj.userId = req.session.passport.user
+//     }
+//     const addedOrder = await Order.create(orderObj)
+//     console.log('req.session in order post: ', req.session)
+
+//     for (let i = 0; i < flower.length; i++) {
+//       let orderItem = flower[i]
+//       orderItem.orderId = addedOrder.id
+//       orderItem.pricePerUnit = orderItem.price
+//       const addedFlowerOrder = await OrderFlower.create(orderItem)
+//       const flowerQuantityUpdate = await Flower.update(
+//         {
+//           stock: orderItem.stock - orderItem.quantity
+//         },
+//         {
+//           where: {id: orderItem.flowerId},
+//           returning: true,
+//           plain: true
+//         }
+//       )
+//     }
+//     res.status(201).json()
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
+router.put('/', async (req, res, next) => {
+  //FOR USERS ONLY - UPDATE ORDER IN DB
   try {
-    const orderFlower = await Order.findByPk(req.params.id)
-    await orderFlower.update(req.body)
-    res.status(200).json(orderFlower)
+    const order = req.body
+    const orderInDB = await Order.findOne({
+      where: {
+        statusOpen: true,
+        userId: req.session.passport.user
+      }
+    })
+    if (!orderInDB) {
+      let orderObj = {}
+      orderObj.total = order.reduce(
+        (accumulator, increment) => accumulator + +increment.totalPrice,
+        0
+      )
+      if (req.session.checkout) {
+        orderObj.statusOpen = false // UPDATE STOCK
+      } else {
+        orderObj.statusOpen = true
+      }
+      orderObj.userId = req.session.passport.user
+      const addedOrder = await Order.create(orderObj)
+      for (let i = 0; i < order.length; i++) {
+        let orderItem = order[i]
+        orderItem.orderId = addedOrder.id
+        orderItem.pricePerUnit = orderItem.price
+        const addedFlowerOrder = await OrderFlower.create(orderItem)
+        if (req.session.checkout) {
+          const flowerQuantityUpdate = await Flower.update(
+            {
+              stock: orderItem.stock - orderItem.quantity
+            },
+            {
+              where: {id: orderItem.flowerId},
+              returning: true,
+              plain: true
+            }
+          )
+        }
+      }
+      res.status(201).json()
+    } else {
+      await orderInDB.update({
+        total: order.reduce(
+          (accumulator, increment) => accumulator + +increment.totalPrice,
+          0
+        )
+      })
+      if (req.session.checkout) {
+        await orderInDB.update({
+          statusOpen: false
+        })
+        // UPDATE STOCK
+      }
+      for (let i = 0; i < order.length; i++) {
+        let orderItem = order[i]
+        const orderFlowerFlowerIdInDB = await OrderFlower.findOne({
+          where: {
+            flowerId: orderItem.flowerId,
+            orderId: orderInDB.id
+          }
+        })
+        if (orderFlowerFlowerIdInDB) {
+          await orderFlowerFlowerIdInDB.update({
+            quantity: orderItem.quantity,
+            pricePerUnit: orderItem.totalPrice
+          })
+        } else {
+          orderItem.orderId = orderInDB.id
+          orderItem.pricePerUnit = orderItem.price
+          await OrderFlower.create(orderItem)
+        }
+        if (req.session.checkout) {
+          const flowerQuantityUpdate = await Flower.update(
+            {
+              stock: orderItem.stock - orderItem.quantity
+            },
+            {
+              where: {id: orderItem.flowerId},
+              returning: true,
+              plain: true
+            }
+          )
+        }
+      }
+    }
   } catch (error) {
     next(error)
   }

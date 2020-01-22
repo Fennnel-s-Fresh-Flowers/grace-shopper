@@ -3,7 +3,7 @@ import axios from 'axios'
 //ACTION TYPES
 const GOT_ALL_ORDERS = 'GOT_ALL_ORDERS'
 const GOT_ONE_ORDER = 'GOT_ONE_ORDER'
-const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
+const ADDED_ORDER_TO_STORE = 'ADDED_ORDER_TO_STORE'
 // const UPDATE_ORDER = 'UPDATE_ORDER'
 const GOT_ORDER_FROM_SESSION = 'GOT_ORDER_FROM_SESSION'
 const ADDED_ORDER_TO_SESSION = 'ADD_ORDER_TO_SESSION'
@@ -16,28 +16,18 @@ const gotOneOrder = order => ({type: GOT_ONE_ORDER, order})
 const gotOrderFromSession = order => ({type: GOT_ORDER_FROM_SESSION, order})
 const addedOrderToSession = order => ({type: ADDED_ORDER_TO_SESSION, order})
 const updatedOrderInSession = order => ({type: UPDATED_ORDER_IN_SESSION, order})
+const addedOrderToStore = order => ({type: ADDED_ORDER_TO_STORE, order})
 
 export const clearCart = empty => ({type: CLEAR_CART, empty})
 
-const addedOrderItem = order => ({type: ADDED_ORDER_ITEM, order})
-// export const updateOrder = order => ({type: UPDATE_ORDER, order})
-
-// export const getAllOrders = function() {
-//   return async dispatch => {
-//     const {data} = await axios.get('/api/orders')
-//     dispatch(gotAllOrders(data))
-//   }
-// }
-
-export const addOrderItem = order => {
+export const checkout = order => {
   return async dispatch => {
     const {data} = await axios.post(`/api/orders/`, order)
-    dispatch(addedOrderItem(data))
+    dispatch(addedOrderToStore(data))
   }
 }
 
 export const getAnOrder = function(id) {
-  console.log('in the single order thunk')
   return async dispatch => {
     const {data} = await axios.get(`/api/orders/${id}`)
     dispatch(gotOneOrder(data))
@@ -46,25 +36,24 @@ export const getAnOrder = function(id) {
 
 export const addOrderToSession = function(orderItem) {
   const sentItem = []
-  sentItem.push(orderItem) //using spread was serving an error
-  //   console.log('in add order to session thunk. Order item: ', orderItem)
-  //   console.log('HEEEEEERE', sentItem)
+  sentItem.push(orderItem)
   return async dispatch => {
-    // console.log('HEEEEEERE', sentItem)
     const {data} = await axios.post(`/api/session/`, sentItem)
-    // console.log('HEEEEEERE', sentItem)
     dispatch(addedOrderToSession(data))
   }
 }
 
 export const updateOrderInSession = function(order) {
-  // const sentItem = []
-  // sentItem.push(orderItem) //using spread was serving an error
-  //   console.log('in add order to session thunk. Order item: ', orderItem)
-  //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
     const {data} = await axios.put(`/api/session/`, order)
     dispatch(updatedOrderInSession(data))
+  }
+}
+
+export const clearSession = function() {
+  return async dispatch => {
+    await axios.delete('/api/session/')
+    dispatch(clearCart([]))
   }
 }
 
@@ -104,7 +93,7 @@ export default function orderReducer(
       return {...orders, all: action.orders}
     case GOT_ONE_ORDER:
       return {...orders, single: action.order}
-    case ADDED_ORDER_ITEM:
+    case ADDED_ORDER_TO_STORE:
       return {...orders, all: action.order} //helper([...orders.all, action.order])}
     // case UPDATE_ORDER:
     //   return {...orders, all: action.order.filter(item => item.quantity > 0)}
