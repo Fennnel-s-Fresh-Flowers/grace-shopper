@@ -6,7 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-// const ADD_TO_CART = 'ADD_TO_CART'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -18,7 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-// export const addToCart = item => ({type: ADD_TO_CART, item})
+const updateUser = user => ({type: UPDATE_USER, user})
 
 /**
  * THUNK CREATORS
@@ -48,6 +48,11 @@ export const auth = (userObj, method) => async dispatch => {
   }
 }
 
+export const deleteUser = () => async dispatch => {
+  dispatch(removeUser())
+  await axios.delete(`/api/${id}`)
+}
+
 export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
@@ -56,6 +61,12 @@ export const logout = () => async dispatch => {
   } catch (err) {
     console.error(err)
   }
+}
+
+export const updateUserThunk = info => async dispatch => {
+  console.log('in updateUserThunk, passing in: ', info)
+  const updatedUserInfo = await axios.put(`/api/users/${info.id}`, info)
+  dispatch(updateUser(updatedUserInfo))
 }
 
 /**
