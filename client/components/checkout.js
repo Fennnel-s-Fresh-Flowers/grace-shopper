@@ -26,7 +26,7 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    addOrderItem(this.props.orderItems)
+    this.props.addOrderItem(this.props.orderItems)
     this.setState(defaultState)
   }
 

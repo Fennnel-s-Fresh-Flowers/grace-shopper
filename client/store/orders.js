@@ -29,17 +29,11 @@ const addedOrderItem = order => ({type: ADDED_ORDER_ITEM, order})
 //   }
 // }
 
-export const addOrderItem = function(order) {
-  //   try {
-  console.log('IN REDUCER', order)
+export const addOrderItem = order => {
   return async dispatch => {
-    console.log('IN DISPATCH')
-    const {data} = await axios.post('/api/orders', order)
+    const {data} = await axios.post(`/api/orders/`, order)
     dispatch(addedOrderItem(data))
   }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
 }
 
 export const getAnOrder = function(id) {
@@ -56,7 +50,9 @@ export const addOrderToSession = function(orderItem) {
   //   console.log('in add order to session thunk. Order item: ', orderItem)
   //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
+    // console.log('HEEEEEERE', sentItem)
     const {data} = await axios.post(`/api/session/`, sentItem)
+    // console.log('HEEEEEERE', sentItem)
     dispatch(addedOrderToSession(data))
   }
 }
@@ -109,7 +105,7 @@ export default function orderReducer(
     case GOT_ONE_ORDER:
       return {...orders, single: action.order}
     case ADDED_ORDER_ITEM:
-      return {...orders, all: helper([...orders.all, action.order])}
+      return {...orders, all: action.order} //helper([...orders.all, action.order])}
     // case UPDATE_ORDER:
     //   return {...orders, all: action.order.filter(item => item.quantity > 0)}
     case ADDED_ORDER_TO_SESSION:

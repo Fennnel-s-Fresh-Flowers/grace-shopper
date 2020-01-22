@@ -13,13 +13,9 @@ class GuestCheckout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    addOrderItem()
+    this.props.addOrderItem(this.props.orderItems)
     this.setState(defaultState)
   }
-
-  // handleChange(evt) {
-  //   this.setState({[evt.target.name]: evt.target.value})
-  // }
 
   render() {
     const items = this.props.orderItems

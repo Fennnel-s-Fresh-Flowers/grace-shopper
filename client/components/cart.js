@@ -14,11 +14,11 @@ class Cart extends React.Component {
   render() {
     const user = this.props.user
     const items = this.props.orderItems
-    //the funciton below calulates the total cost of all items by adding separate item totals togather in the 'accumulator'
-    const totalCost = items.reduce(
-      (accumulator, item) => accumulator + +item.totalPrice,
-      0
-    )
+
+    const totalCost = items.length
+      ? items.reduce((accumulator, item) => accumulator + +item.totalPrice, 0)
+      : 0
+
     return (
       <div id="cart">
         <section>

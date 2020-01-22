@@ -6,7 +6,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const order = await req.session.cart
-    console.log('HEEEEEEERE', req.session)
+    // console.log('HEEEEEEERE', req.session)
     res.json(order)
   } catch (error) {
     next(error)
