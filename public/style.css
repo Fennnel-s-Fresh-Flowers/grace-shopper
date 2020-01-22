@@ -44,7 +44,7 @@ body {
 }
 
 .nav-pair > a {
-  border-radius: 15px;
+  border-radius: 8px;
   border-style: outset;
   margin: 1em;
   background: linear-gradient(
