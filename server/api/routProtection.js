@@ -8,16 +8,6 @@ function isAdmin(req, res, next) {
   }
 }
 
-function isSelf(req, res, next) {
-  if (!req.user) {
-    res.redirect('/error')
-  } else if (req.params.id !== req.user.id) {
-    return res.redirect('/error')
-  } else {
-    return next()
-  }
-}
-
 function isSelfOrAdmin(req, res, next) {
   if (!req.user) {
     res.redirect('/error')
@@ -43,6 +33,5 @@ function isSelfOrAdmin(req, res, next) {
 module.exports = {
   //isLoggedin,
   isAdmin,
-  isSelf,
   isSelfOrAdmin
 }

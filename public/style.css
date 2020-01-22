@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap'); */
 
 html * {
   margin: 0;
@@ -44,7 +44,7 @@ body {
 }
 
 .nav-pair > a {
-  border-radius: 15px;
+  border-radius: 8px;
   border-style: outset;
   margin: 1em;
   background: linear-gradient(
