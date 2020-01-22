@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {isAdmin, isSelf, isSelfOrAdmin} = require('./routProtection')
+const {isAdmin, isSelfOrAdmin} = require('./routProtection')
 const {User} = require('../db/models')
 
 module.exports = router
