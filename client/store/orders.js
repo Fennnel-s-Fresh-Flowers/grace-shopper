@@ -62,10 +62,18 @@ export const addOrderToSessionForUser = function(orderItem) {
   }
 }
 
-export const updateOrderInSession = function(order) {
+export const updateOrderToSessionForGuest = function(order) {
   return async dispatch => {
     const {data} = await axios.put(`/api/session/`, order)
     dispatch(updatedOrderInSession(data))
+  }
+}
+
+export const updateOrderToSessionForUser = function(order) {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/session/`, order)
+    dispatch(updatedOrderInSession(data))
+    dispatch(sendOrderToDb(data))
   }
 }
 

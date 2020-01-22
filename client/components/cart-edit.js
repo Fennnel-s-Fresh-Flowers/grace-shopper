@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateOrderInSession} from '../store/orders'
+import {
+  updateOrderToSessionForGuest,
+  updateOrderToSessionForUser
+} from '../store/orders'
 
 class CartEdit extends React.Component {
   constructor() {
@@ -31,7 +34,12 @@ class CartEdit extends React.Component {
     })
     const filteredItems = items.filter(item => item.quantity > 0)
     console.log('filtered items from edit-cart', filteredItems)
-    this.props.updateOrderInSession(filteredItems)
+
+    if (this.props.user && this.props.user.id) {
+      this.props.updateOrderToSessionForUser(filteredItems)
+    } else {
+      this.props.updateOrderToSessionForGuest(filteredItems)
+    }
     this.props.history.push('/flowers')
   }
 
@@ -72,13 +80,17 @@ class CartEdit extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    orderItems: state.orders.session
+    orderItems: state.orders.session,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateOrderInSession: item => dispatch(updateOrderInSession(item))
+    updateOrderToSessionForGuest: item =>
+      dispatch(updateOrderToSessionForGuest(item)),
+    updateOrderToSessionForUser: item =>
+      dispatch(updateOrderToSessionForUser(item))
   }
 }
 
