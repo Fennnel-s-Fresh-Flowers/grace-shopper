@@ -25,6 +25,7 @@ export default function PastOrders(props) {
                             <h4>
                               {flower.orderFlower.quantity} {flower.name}s
                             </h4>
+                            <h4>${flower.price / 100} each</h4>
                             <img className="order-images" src={flower.imgUrl} />
                           </Link>
                         </li>
