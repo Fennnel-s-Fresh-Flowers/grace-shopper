@@ -30,6 +30,7 @@ class CartEdit extends React.Component {
       flower.totalPrice = flower.price * flower.quantity
     })
     const filteredItems = items.filter(item => item.quantity > 0)
+    console.log('filtered items from edit-cart', filteredItems)
     this.props.updateOrderInSession(filteredItems)
     this.props.history.push('/flowers')
   }

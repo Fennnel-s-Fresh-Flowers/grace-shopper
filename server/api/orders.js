@@ -105,6 +105,7 @@ router.post('/', async (req, res, next) => {
 //   }
 // })
 
+// eslint-disable-next-line max-statements
 router.put('/', async (req, res, next) => {
   //FOR USERS ONLY - UPDATE ORDER IN DB
   try {

@@ -34,12 +34,22 @@ export const getAnOrder = function(id) {
   }
 }
 
+export const sendOrderToDb = function(session) {
+  return async () => {
+    // const {data} = await axios.get('/api/session')
+    console.log('returned form api/orders/put', session)
+    await axios.put('/api/orders', session)
+  }
+}
+
 export const addOrderToSession = function(orderItem) {
   const sentItem = []
   sentItem.push(orderItem)
+  console.log('sentItem', sentItem)
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
     dispatch(addedOrderToSession(data))
+    dispatch(sendOrderToDb(sentItem))
   }
 }
 
