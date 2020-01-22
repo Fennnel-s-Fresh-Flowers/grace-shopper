@@ -83,6 +83,14 @@ export const getOrderFromSession = function() {
   }
 }
 
+export const getAllOrders = function() {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/orders`)
+    console.log('get all orders thunk. data: ', data)
+    dispatch(gotAllOrders(data))
+  }
+}
+
 //REDUCERS
 
 function helper(arr) {

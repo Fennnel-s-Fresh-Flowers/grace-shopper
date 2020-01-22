@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {updateUserThunk, deleteUser, me} from '../store/user'
+import {getAllOrders} from '../store/orders'
+import PastOrders from './order-list'
 
 /**
  * COMPONENT
@@ -15,14 +17,11 @@ class UserHome extends React.Component {
 
   componentDidMount() {
     this.props.getUser()
+    this.props.getPastOrders(this.props.user.id)
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log(
-      'in user home handle submit. This is being passed: ',
-      this.state
-    )
     return this.props.updateUser(this.state)
   }
 
@@ -36,7 +35,7 @@ class UserHome extends React.Component {
   }
 
   render() {
-    // console.log('user home props: ', this)
+    console.log('user home props: ', this.props)
     const {email, firstName, lastName, address, phone} = this.props.user
     return (
       <div>
@@ -95,6 +94,7 @@ class UserHome extends React.Component {
               </li>
             </ul>
           </form>
+          {/* <PastOrders userInfo={this.props.user} /> */}
         </div>
       </div>
     )
@@ -107,7 +107,8 @@ class UserHome extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    orders: state.orders
   }
 }
 
@@ -121,6 +122,9 @@ const mapDispatchToProps = dispatch => {
     },
     removeUser: function(id) {
       dispatch(deleteUser(id))
+    },
+    getPastOrders: function(id) {
+      dispatch(getAllOrders(id))
     }
   }
 }
