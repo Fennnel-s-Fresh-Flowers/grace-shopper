@@ -94,7 +94,7 @@ class UserHome extends React.Component {
               </li>
             </ul>
           </form>
-          {/* <PastOrders userInfo={this.props.user} /> */}
+          <PastOrders orders={this.props.orders.all} />
         </div>
       </div>
     )
