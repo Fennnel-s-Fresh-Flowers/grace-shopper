@@ -34,22 +34,31 @@ export const getAnOrder = function(id) {
   }
 }
 
-export const sendOrderToDb = function(session) {
+export const sendOrderToDb = function(order) {
   return async () => {
     // const {data} = await axios.get('/api/session')
-    console.log('returned form api/orders/put', session)
-    await axios.put('/api/orders', session)
+    console.log('sending to axios api/orders/put request', order)
+    await axios.put('/api/orders', order)
   }
 }
 
-export const addOrderToSession = function(orderItem) {
+export const addOrderToSessionForGuest = function(orderItem) {
   const sentItem = []
   sentItem.push(orderItem)
-  console.log('sentItem', sentItem)
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
     dispatch(addedOrderToSession(data))
-    dispatch(sendOrderToDb(sentItem))
+  }
+}
+
+export const addOrderToSessionForUser = function(orderItem) {
+  const sentItem = []
+  sentItem.push(orderItem)
+  return async dispatch => {
+    const {data} = await axios.post(`/api/session/`, sentItem)
+    dispatch(addedOrderToSession(data))
+    console.log('data in AddOrderToSession', data)
+    dispatch(sendOrderToDb(data))
   }
 }
 
