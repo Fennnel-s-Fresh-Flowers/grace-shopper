@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Home, AllFlowers} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Home,
+  AllFlowers,
+  OauthLoginForm
+} from './components'
 import {me} from './store'
 import SingleFlower from './components/flower-single'
 import NotFound from './components/not-found'
@@ -25,6 +32,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/auth/google" componen={OauthLoginForm} />
         <Route path="/flowers/:id" component={SingleFlower} />
         <Route path="/flowers" component={AllFlowers} />
         <Route path="/cart-edit" component={AllFlowers} />
