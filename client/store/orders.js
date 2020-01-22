@@ -20,9 +20,16 @@ const addedOrderToStore = order => ({type: ADDED_ORDER_TO_STORE, order})
 
 export const clearCart = empty => ({type: CLEAR_CART, empty})
 
-export const checkout = order => {
+export const checkoutForGuest = order => {
   return async dispatch => {
     const {data} = await axios.post(`/api/orders/`, order)
+    dispatch(addedOrderToStore(data))
+  }
+}
+
+export const checkoutForUser = order => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/orders/`, order)
     dispatch(addedOrderToStore(data))
   }
 }
@@ -99,6 +106,11 @@ export const getAllOrders = function() {
   }
 }
 
+export const checkoutOnSession = function() {
+  return async () => {
+    await axios.post('/api/session/checkout')
+  }
+}
 //REDUCERS
 
 function helper(arr) {

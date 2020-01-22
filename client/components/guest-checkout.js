@@ -1,5 +1,5 @@
 import React from 'react'
-import {checkout, clearSession} from '../store/orders'
+import {checkoutForGuest, clearSession} from '../store/orders'
 import {connect} from 'react-redux'
 
 const defaultState = {firstName: '', lastName: '', address: ''}
@@ -12,7 +12,7 @@ class GuestCheckout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.checkout(this.props.orderItems)
+    this.props.checkoutForGuest(this.props.orderItems)
     this.props.clearSession()
     this.setState(defaultState)
   }
@@ -38,8 +38,8 @@ const maptStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    checkout: item => {
-      dispatch(checkout(item))
+    checkoutForGuest: item => {
+      dispatch(checkoutForGuest(item))
     },
     clearSession: () => {
       dispatch(clearSession())

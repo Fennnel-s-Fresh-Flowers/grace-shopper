@@ -41,6 +41,7 @@ router.post('/', (req, res, next) => {
 
 router.post('/checkout', (req, res, next) => {
   req.session.checkout = true
+  console.log('session checkout', req.session)
   res.json(req.session.checkout)
 })
 
