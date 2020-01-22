@@ -41,12 +41,17 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', isSelfOrAdmin, async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
+    console.log('in the user router put. req.body: ', req.body)
     const user = await User.findByPk(+req.params.id)
     if (!user) return res.status(404).json('No such user at our store!')
-    await user.update(req.body)
-    res.status(200).json(user)
+    const updatedUser = await User.update(req.body, {
+      where: {id: req.params.id},
+      returning: true,
+      plain: true
+    })
+    res.status(200).json(updatedUser)
   } catch (error) {
     next(error)
   }

@@ -36,6 +36,14 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
+// router.put('/:id', async (req, res, next) => {
+//   try {
+
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
