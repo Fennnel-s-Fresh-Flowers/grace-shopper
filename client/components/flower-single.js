@@ -50,11 +50,13 @@ class SingleFlower extends React.Component {
       stock: single.stock,
       flowerId: single.id
     })
+
     this.setState({quantity: 1})
   }
 
   handleChange(event) {
     this.setState({quantity: event.target.value})
+    console.log(this.props.session)
   }
 
   render() {
@@ -85,7 +87,8 @@ class SingleFlower extends React.Component {
 const mapStateToProps = state => {
   return {
     flower: state.flowers,
-    orderItems: state.orders.session
+    orderItems: state.orders.session,
+    user: state.user
   }
 }
 

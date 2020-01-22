@@ -20,14 +20,6 @@ const updatedOrderInSession = order => ({type: UPDATED_ORDER_IN_SESSION, order})
 export const clearCart = empty => ({type: CLEAR_CART, empty})
 
 const addedOrderItem = order => ({type: ADDED_ORDER_ITEM, order})
-// export const updateOrder = order => ({type: UPDATE_ORDER, order})
-
-// export const getAllOrders = function() {
-//   return async dispatch => {
-//     const {data} = await axios.get('/api/orders')
-//     dispatch(gotAllOrders(data))
-//   }
-// }
 
 export const addOrderItem = order => {
   return async dispatch => {
@@ -37,7 +29,6 @@ export const addOrderItem = order => {
 }
 
 export const getAnOrder = function(id) {
-  console.log('in the single order thunk')
   return async dispatch => {
     const {data} = await axios.get(`/api/orders/${id}`)
     dispatch(gotOneOrder(data))
@@ -46,25 +37,24 @@ export const getAnOrder = function(id) {
 
 export const addOrderToSession = function(orderItem) {
   const sentItem = []
-  sentItem.push(orderItem) //using spread was serving an error
-  //   console.log('in add order to session thunk. Order item: ', orderItem)
-  //   console.log('HEEEEEERE', sentItem)
+  sentItem.push(orderItem)
   return async dispatch => {
-    // console.log('HEEEEEERE', sentItem)
     const {data} = await axios.post(`/api/session/`, sentItem)
-    // console.log('HEEEEEERE', sentItem)
     dispatch(addedOrderToSession(data))
   }
 }
 
 export const updateOrderInSession = function(order) {
-  // const sentItem = []
-  // sentItem.push(orderItem) //using spread was serving an error
-  //   console.log('in add order to session thunk. Order item: ', orderItem)
-  //   console.log('HEEEEEERE', sentItem)
   return async dispatch => {
     const {data} = await axios.put(`/api/session/`, order)
     dispatch(updatedOrderInSession(data))
+  }
+}
+
+export const clearSession = function() {
+  return async dispatch => {
+    await axios.delete('/api/session/')
+    dispatch(clearCart([]))
   }
 }
 
