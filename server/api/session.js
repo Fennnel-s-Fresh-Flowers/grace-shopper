@@ -18,6 +18,7 @@ router.post('/', (req, res, next) => {
     req.session.cart = []
   }
   const cart = req.session.cart
+  req.session.checkout = false
   // console.log('body name: ', req.body[0].name)
   // console.log('cart: ', cart)
   // console.log('includes', cart[0].name === req.body[0].name)
@@ -36,6 +37,11 @@ router.post('/', (req, res, next) => {
   }
   console.log('cart after loop: ', req.session)
   res.json(cart)
+})
+
+router.post('/checkout', (req, res, next) => {
+  req.session.checkout = true
+  res.json(req.session.checkout)
 })
 
 router.put('/', (req, res, next) => {
