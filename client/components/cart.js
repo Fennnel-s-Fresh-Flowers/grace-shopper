@@ -12,7 +12,11 @@ class Cart extends React.Component {
 
   render() {
     const items = this.props.orderItems
-    // console.log('IN CART!!!!!!!!', this.props)
+
+    const totalCost = items.length
+      ? items.reduce((accumulator, item) => accumulator + +item.totalPrice, 0)
+      : 0
+
     return (
       <div id="cart">
         <section>
