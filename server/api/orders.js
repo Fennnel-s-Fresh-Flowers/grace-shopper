@@ -19,9 +19,10 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
-    const order = await Order.findByPk(id, {
-      include: [{model: Flower}, {model: User}]
+    const order = await Order.findOne({
+      where: {statusOpen: true, userId: id}
     })
+    console.log('get an order', order)
     res.json(order)
   } catch (error) {
     next(error)
