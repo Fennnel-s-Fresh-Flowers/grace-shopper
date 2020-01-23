@@ -28,10 +28,6 @@ const User = db.define('user', {
   },
   address: {
     type: Sequelize.STRING
-    // allowNull: true,
-    // validate: {
-    //   notEmpty: false
-    // }
   },
   phone: {
     type: Sequelize.STRING

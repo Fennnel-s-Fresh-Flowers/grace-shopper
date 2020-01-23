@@ -33,8 +33,15 @@ router.get('/:id', isSelfOrAdmin, async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log('in user post. req.body: ', req.body)
-    const newUser = await User.create(req.body)
+    const newUser = await User.create({
+      email: req.body.email,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address: req.body.address,
+      phone: req.body.phone,
+      admin: false
+    })
     res.status(201).json(newUser)
   } catch (error) {
     next(error)
@@ -43,7 +50,6 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    console.log('in the user router put. req.body: ', req.body)
     const user = await User.findByPk(+req.params.id)
     if (!user) return res.status(404).json('No such user at our store!')
     const updatedUser = await User.update(req.body, {
