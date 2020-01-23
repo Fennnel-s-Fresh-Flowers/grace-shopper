@@ -10,7 +10,6 @@ router.get('/', async (req, res, next) => {
       where: {userId: req.session.passport.user},
       include: [{model: Flower}, {model: User}]
     })
-    console.log('in all orders get. returning: ', order)
     res.json(order)
   } catch (error) {
     next(error)
@@ -30,8 +29,6 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  // USER PERSISTENT IN DB
-  console.log('POOOOOSTING')
   try {
     const order = req.body
     let orderObj = {}
@@ -45,7 +42,6 @@ router.post('/', async (req, res, next) => {
       orderObj.statusOpen = true
     }
     const addedOrder = await Order.create(orderObj)
-    console.log('req.session in order post: ', req.session)
 
     for (let i = 0; i < order.length; i++) {
       let orderItem = order[i]
@@ -69,47 +65,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// router.post('/', async (req, res, next) => { // USER NOT PERSISTENT IN DB
-//   console.log('POOOOOSTING')
-//   try {
-//     const flower = req.body
-//     let orderObj = {}
-//     orderObj.total = flower.reduce(
-//       (accumulator, increment) => accumulator + +increment.totalPrice,
-//       0
-//     )
-//     orderObj.statusOpen = false
-//     if (req.session.passport && req.session.passport.user) {
-//       orderObj.userId = req.session.passport.user
-//     }
-//     const addedOrder = await Order.create(orderObj)
-//     console.log('req.session in order post: ', req.session)
-
-//     for (let i = 0; i < flower.length; i++) {
-//       let orderItem = flower[i]
-//       orderItem.orderId = addedOrder.id
-//       orderItem.pricePerUnit = orderItem.price
-//       const addedFlowerOrder = await OrderFlower.create(orderItem)
-//       const flowerQuantityUpdate = await Flower.update(
-//         {
-//           stock: orderItem.stock - orderItem.quantity
-//         },
-//         {
-//           where: {id: orderItem.flowerId},
-//           returning: true,
-//           plain: true
-//         }
-//       )
-//     }
-//     res.status(201).json()
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// eslint-disable-next-line max-statements
 router.put('/', async (req, res, next) => {
-  //FOR USERS ONLY - UPDATE ORDER IN DB
   try {
     const order = req.body
     const orderInDB = await Order.findOne({
@@ -118,83 +74,76 @@ router.put('/', async (req, res, next) => {
         userId: req.session.passport.user
       }
     })
-    if (!orderInDB) {
-      let orderObj = {}
-      orderObj.total = order.reduce(
-        (accumulator, increment) => accumulator + +increment.totalPrice,
-        0
-      )
-      if (req.session.checkout) {
-        orderObj.statusOpen = false // UPDATE STOCK
-      } else {
-        orderObj.statusOpen = true
-      }
-      orderObj.userId = req.session.passport.user
-      const addedOrder = await Order.create(orderObj)
-      for (let i = 0; i < order.length; i++) {
-        let orderItem = order[i]
-        orderItem.orderId = addedOrder.id
-        orderItem.pricePerUnit = orderItem.price
-        const addedFlowerOrder = await OrderFlower.create(orderItem)
-        if (req.session.checkout) {
-          const flowerQuantityUpdate = await Flower.update(
-            {
-              stock: orderItem.stock - orderItem.quantity
-            },
-            {
-              where: {id: orderItem.flowerId},
-              returning: true,
-              plain: true
-            }
-          )
+
+    if (orderInDB) {
+      await Order.destroy({
+        where: {
+          id: orderInDB.id
         }
-      }
-      res.status(201).json()
-    } else {
-      await orderInDB.update({
-        total: order.reduce(
-          (accumulator, increment) => accumulator + +increment.totalPrice,
-          0
-        )
       })
-      if (req.session.checkout) {
-        await orderInDB.update({
-          statusOpen: false
-        })
-        // UPDATE STOCK
-      }
-      for (let i = 0; i < order.length; i++) {
-        let orderItem = order[i]
-        const orderFlowerFlowerIdInDB = await OrderFlower.findOne({
-          where: {
-            flowerId: orderItem.flowerId,
-            orderId: orderInDB.id
-          }
-        })
-        if (orderFlowerFlowerIdInDB) {
-          await orderFlowerFlowerIdInDB.update({
-            quantity: orderItem.quantity,
-            pricePerUnit: orderItem.totalPrice
-          })
-        } else {
-          orderItem.orderId = orderInDB.id
-          orderItem.pricePerUnit = orderItem.price
-          await OrderFlower.create(orderItem)
-        }
-        if (req.session.checkout) {
-          const flowerQuantityUpdate = await Flower.update(
-            {
-              stock: orderItem.stock - orderItem.quantity
-            },
-            {
-              where: {id: orderItem.flowerId},
-              returning: true,
-              plain: true
-            }
-          )
-        }
-      }
     }
+
+    let orderObj = {}
+    orderObj.total = order.reduce(
+      (accumulator, increment) => accumulator + +increment.totalPrice,
+      0
+    )
+    orderObj.userId = req.session.passport.user
+    const addedOrder = await Order.create(orderObj)
+    for (let i = 0; i < order.length; i++) {
+      let orderItem = order[i]
+      orderItem.orderId = addedOrder.id
+      orderItem.pricePerUnit = orderItem.price
+      const addedFlowerOrder = await OrderFlower.create(orderItem)
+    }
+    res.status(201).json()
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/userCheckout', async (req, res, next) => {
+  try {
+    const order = req.body
+    const orderInDB = await Order.findOne({
+      where: {
+        statusOpen: true,
+        userId: req.session.passport.user
+      }
+    })
+
+    if (orderInDB) {
+      await Order.destroy({
+        where: {
+          id: orderInDB.id
+        }
+      })
+    }
+    let orderObj = {}
+    orderObj.total = order.reduce(
+      (accumulator, increment) => accumulator + +increment.totalPrice,
+      0
+    )
+    orderObj.statusOpen = false
+    orderObj.userId = req.session.passport.user
+    const addedOrder = await Order.create(orderObj)
+    for (let i = 0; i < order.length; i++) {
+      let orderItem = order[i]
+      orderItem.orderId = addedOrder.id
+      orderItem.pricePerUnit = orderItem.price
+      const addedFlowerOrder = await OrderFlower.create(orderItem)
+      const flowerQuantityUpdate = await Flower.update(
+        {
+          stock: orderItem.stock - orderItem.quantity
+        },
+        {
+          where: {id: orderItem.flowerId},
+          returning: true,
+          plain: true
+        }
+      )
+    }
+    res.status(201).json()
   } catch (error) {
     next(error)
   }
