@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 export default function PastOrders(props) {
-  console.log('past orders list generator. props: ', props)
   const {orders} = props
 
   //this should generate past orders from the user by mapping though the orders, mapping through the eager-loaded array of contents of the order
