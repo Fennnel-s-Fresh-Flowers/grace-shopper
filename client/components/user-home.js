@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {updateUserThunk, deleteUser, me} from '../store/user'
-import {getAllOrders} from '../store/orders'
+import {getAllOrders, setOpenCartOnSession} from '../store/orders'
 import PastOrders from './order-list'
 
 /**
@@ -16,8 +16,9 @@ class UserHome extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser()
+    // this.props.getUser()
     this.props.getPastOrders(this.props.user.id)
+    this.props.setOpenCartOnSession(this.props.user.id)
   }
 
   handleSubmit(event) {
@@ -28,10 +29,6 @@ class UserHome extends React.Component {
   handleChange(event) {
     this.setState({id: this.props.user.id})
     this.setState({[event.target.name]: event.target.value})
-  }
-
-  handleDelete() {
-    this.props.removeUser()
   }
 
   render() {
@@ -120,11 +117,11 @@ const mapDispatchToProps = dispatch => {
     updateUser: function(updatedUser) {
       dispatch(updateUserThunk(updatedUser))
     },
-    removeUser: function(id) {
-      dispatch(deleteUser(id))
-    },
     getPastOrders: function(id) {
       dispatch(getAllOrders(id))
+    },
+    setOpenCartOnSession: function(id) {
+      dispatch(setOpenCartOnSession(id))
     }
   }
 }
