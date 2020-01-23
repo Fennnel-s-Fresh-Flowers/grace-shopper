@@ -22,7 +22,6 @@ router.get('/:id', async (req, res, next) => {
     const order = await Order.findOne({
       where: {statusOpen: true, userId: id}
     })
-    console.log('get an order', order)
     res.json(order)
   } catch (error) {
     next(error)
