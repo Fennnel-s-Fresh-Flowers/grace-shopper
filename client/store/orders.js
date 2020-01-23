@@ -53,6 +53,7 @@ export const addOrderToSessionForGuest = function(orderItem) {
   sentItem.push(orderItem)
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
+
     dispatch(addedOrderToSession(data))
   }
 }
@@ -60,8 +61,10 @@ export const addOrderToSessionForGuest = function(orderItem) {
 export const addOrderToSessionForUser = function(orderItem) {
   const sentItem = []
   sentItem.push(orderItem)
+  console.log('sentItem', sentItem)
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
+    console.log('DATA', data)
     dispatch(addedOrderToSession(data))
     dispatch(sendOrderToDb(data))
   }
