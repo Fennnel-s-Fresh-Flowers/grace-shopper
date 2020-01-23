@@ -39,7 +39,8 @@ router.post('/', async (req, res, next) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       address: req.body.address,
-      phone: req.body.phone
+      phone: req.body.phone,
+      admin: false
     })
     res.status(201).json(newUser)
   } catch (error) {
