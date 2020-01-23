@@ -29,7 +29,7 @@ export const checkoutForGuest = order => {
 
 export const checkoutForUser = order => {
   return async dispatch => {
-    const {data} = await axios.put(`/api/orders/`, order)
+    const {data} = await axios.put(`/api/orders/userCheckout`, order)
     dispatch(addedOrderToStore(data))
   }
 }
@@ -43,7 +43,6 @@ export const getAnOrder = function(id) {
 
 export const sendOrderToDb = function(order) {
   return async () => {
-    // const {data} = await axios.get('/api/session')
     console.log('sending to axios api/orders/put request', order)
     await axios.put('/api/orders', order)
   }
@@ -64,7 +63,6 @@ export const addOrderToSessionForUser = function(orderItem) {
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
     dispatch(addedOrderToSession(data))
-    console.log('data in AddOrderToSession', data)
     dispatch(sendOrderToDb(data))
   }
 }
@@ -84,13 +82,6 @@ export const updateOrderToSessionForUser = function(order) {
   }
 }
 
-export const clearSession = function() {
-  return async dispatch => {
-    await axios.delete('/api/session/')
-    dispatch(clearCart([]))
-  }
-}
-
 export const getOrderFromSession = function() {
   return async dispatch => {
     const {data} = await axios.get('/api/session')
@@ -101,35 +92,36 @@ export const getOrderFromSession = function() {
 export const getAllOrders = function() {
   return async dispatch => {
     const {data} = await axios.get(`/api/orders`)
-    console.log('get all orders thunk. data: ', data)
     dispatch(gotAllOrders(data))
   }
 }
 
-export const checkoutOnSession = function() {
-  return async () => {
-    await axios.post('/api/session/checkout')
+export const clearSession = function() {
+  return async dispatch => {
+    await axios.delete('/api/session/')
+    dispatch(clearCart([]))
   }
 }
+
 //REDUCERS
 
-function helper(arr) {
-  if (!arr.length) return arr
-  let newArr = [arr[0]]
-  for (let i = 1; i < arr.length; i++) {
-    let elem = arr[i]
-    let result
-    for (let j = 0; j < newArr.length; j++) {
-      if (newArr[j].name === elem.name) {
-        newArr[j].quantity += elem.quantity
-        newArr[j].totalPrice += elem.totalPrice
-        result = true
-      }
-    }
-    if (!result) newArr.push(elem)
-  }
-  return newArr
-}
+// function helper(arr) {
+//   if (!arr.length) return arr
+//   let newArr = [arr[0]]
+//   for (let i = 1; i < arr.length; i++) {
+//     let elem = arr[i]
+//     let result
+//     for (let j = 0; j < newArr.length; j++) {
+//       if (newArr[j].name === elem.name) {
+//         newArr[j].quantity += elem.quantity
+//         newArr[j].totalPrice += elem.totalPrice
+//         result = true
+//       }
+//     }
+//     if (!result) newArr.push(elem)
+//   }
+//   return newArr
+// }
 
 export default function orderReducer(
   orders = {all: [], session: [], single: {}},
