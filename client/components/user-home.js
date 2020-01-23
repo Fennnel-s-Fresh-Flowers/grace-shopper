@@ -18,7 +18,7 @@ class UserHome extends React.Component {
   componentDidMount() {
     // this.props.getUser()
     this.props.getPastOrders(this.props.user.id)
-    this.props.setOpenCartOnSession(this.props.user.id)
+    // this.props.setOpenCartOnSession(this.props.user.id)
   }
 
   handleSubmit(event) {
