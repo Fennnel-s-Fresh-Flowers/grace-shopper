@@ -3,12 +3,16 @@ import {connect} from 'react-redux'
 import {Link, Route} from 'react-router-dom'
 import Checkout from './checkout'
 import CartEdit from './cart-edit'
-import {getOrderFromSession} from '../store/orders'
+import {getOrderFromSession, setOpenCartOnSession} from '../store/orders'
 import GuestCheckout from './guest-checkout'
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.getOrderFromSession()
+    if (this.props.user) {
+      this.props.setOpenCartOnSession()
+    } else {
+      this.props.getOrderFromSession()
+    }
   }
 
   render() {
@@ -90,6 +94,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getOrderFromSession: () => {
       dispatch(getOrderFromSession())
+    },
+    setOpenCartOnSession: () => {
+      dispatch(setOpenCartOnSession())
     }
   }
 }

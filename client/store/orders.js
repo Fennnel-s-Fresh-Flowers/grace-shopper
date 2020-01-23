@@ -102,25 +102,31 @@ export const clearSession = function() {
   }
 }
 
-// export const setOpenCartOnSession = function(id) { // LOGIN THUNK
-//   return async dispatch => {
-//     const openOrder = await axios.get(`/api/orders/${id}`)
-//     await axios.put('/api/session', openOrder)
-//     console.log('order in setOpenCartOnSessionThunk', openOrder)
-//     dispatch(addedOrderToSession(openOrder))
-//   }
-// }
-
-export const setOpenCartOnSession = function(id) {
+export const setOpenCartOnSession = function() {
   return async dispatch => {
-    const openOrder = await axios.get(`/api/orders/${id}`)
+    const {data} = await axios.get(`/api/orders/userCart`)
+    console.log(data)
+    if (data && data.id) {
+      let orderArr = []
+      let flowerArr = data.flowers
+      flowerArr.forEach(flowerOrder => {
+        let orderItem = {}
+        orderItem.name = flowerOrder.name
+        orderItem.price = flowerOrder.price
+        orderItem.quantity = flowerOrder.orderFlower.quantity
+        orderItem.totalPrice =
+          parseInt(flowerOrder.orderFlower.quantity) *
+          parseInt(flowerOrder.price)
+        orderItem.stock = flowerOrder.stock
+        orderItem.flowerId = flowerOrder.id
+        orderArr.push(orderItem)
+      })
 
-    if (!openOrder.data) {
-      dispatch(getOrderFromSession())
+      await axios.put('/api/session', orderArr)
+
+      dispatch(addedOrderToSession(orderArr))
     } else {
-      await axios.put('/api/session', [openOrder.data])
-
-      dispatch(addedOrderToSession([openOrder.data]))
+      dispatch(getOrderFromSession())
     }
   }
 }

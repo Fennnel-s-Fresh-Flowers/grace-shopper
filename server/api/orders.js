@@ -3,24 +3,23 @@ const {isAdmin, isSelfOrAdmin} = require('./routProtection')
 const {User, Flower, Order, OrderFlower} = require('../db/models')
 module.exports = router
 
-// router.get('/', isAdmin, async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
+    const {data} = await Order.findAll({
       where: {userId: req.session.passport.user},
       include: [{model: Flower}, {model: User}]
     })
-    res.json(order)
+    res.json(data)
   } catch (error) {
     next(error)
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/userCart', async (req, res, next) => {
   try {
-    const id = req.params.id
     const order = await Order.findOne({
-      where: {statusOpen: true, userId: id}
+      where: {userId: req.session.passport.user, statusOpen: true},
+      include: [{model: Flower}]
     })
     res.json(order)
   } catch (error) {
