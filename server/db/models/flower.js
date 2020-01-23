@@ -21,7 +21,7 @@ const Flower = db.define('flower', {
     validate: {
       notEmpty: true
     }
-  }, //lets be sure to make the price a quantity in pennies because JS is bad at math
+  },
   stock: {type: Sequelize.INTEGER},
   imgUrl: {type: Sequelize.STRING}
 })

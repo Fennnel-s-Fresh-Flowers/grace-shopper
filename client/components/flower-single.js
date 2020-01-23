@@ -46,7 +46,6 @@ class SingleFlower extends React.Component {
 
   handleChange(event) {
     this.setState({quantity: event.target.value})
-    console.log(this.props.session)
   }
 
   render() {

@@ -18,22 +18,6 @@ const OrderFlower = db.define('orderFlower', {
       notEmpty: true
     }
   }
-  // orderId: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Order,
-  //     key: 'id'
-  //   }
-  // },
-  // flowerId: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Flower,
-  //     key: 'id'
-  //   }
-  // }
 })
 
 module.exports = OrderFlower
