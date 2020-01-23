@@ -64,7 +64,6 @@ export const logout = () => async dispatch => {
 }
 
 export const updateUserThunk = info => async dispatch => {
-  console.log('in updateUserThunk, passing in: ', info)
   const updatedUserInfo = await axios.put(`/api/users/${info.id}`, info)
   dispatch(updateUser(updatedUserInfo))
 }

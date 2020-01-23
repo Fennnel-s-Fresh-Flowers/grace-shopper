@@ -16,10 +16,8 @@ class UserHome extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.getUser()
     this.props.getPastOrders(this.props.user.id)
-
-    // this.props.setOpenCartOnSession(this.props.user.id)
+    // this.props.setOpenCartOnSession(this.props.user.id) - LOGIN LOAD
   }
 
   handleSubmit(event) {
@@ -33,7 +31,6 @@ class UserHome extends React.Component {
   }
 
   render() {
-    console.log('user home props: ', this.props)
     const {email, firstName, lastName, address, phone} = this.props.user
     return (
       <div>

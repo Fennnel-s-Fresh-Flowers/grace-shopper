@@ -38,25 +38,5 @@ describe('Flower routes', () => {
       expect(res.body).to.be.an('object')
       expect(res.body.name).to.be.equal(flowerName)
     })
-
-    // it('POST /api/flowers returns error if not admin', async () => {
-
-    //   const res = await request(app)
-    //     .post('/api/flowers')
-    //     .send({name: 'roses', price: 800})
-    //     .expect('/error')
-
-    //   expect(res.body).to.be.an('object')
-    //   expect(res.body.name).to.be.equal('roses')
-    // })
-
-    // it('DELETE /api/flowers/1 returns error if not admin', async () => {
-    //   const res = await request(app)
-    //     .delete('/api/flowers/1')
-    //     .expect('/error')
-
-    //   expect(res.body).to.be.an('object')
-    //   expect(res.body.name).to.be.equal(undefined)
-    // })
   }) // end describe('/api/flowers')
 }) // end describe('Flower routes')

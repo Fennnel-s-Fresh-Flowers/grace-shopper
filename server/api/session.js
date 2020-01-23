@@ -27,24 +27,20 @@ router.post('/', (req, res, next) => {
       break
     }
   }
-  console.log('cart after loop: ', req.session)
   res.json(cart)
 })
 
 router.post('/checkout', (req, res, next) => {
   req.session.checkout = true
-  console.log('session checkout', req.session)
   res.json(req.session.checkout)
 })
 
 router.put('/', (req, res, next) => {
   req.session.cart = req.body
-  console.log('in put request: ', req.session)
   res.json(req.session.cart)
 })
 
 router.delete('/', (req, res, next) => {
   req.session.cart = []
-  console.log('in put request: ', req.session)
   res.json(req.session.cart)
 })

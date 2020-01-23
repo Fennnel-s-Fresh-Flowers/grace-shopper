@@ -4,7 +4,6 @@ import axios from 'axios'
 const GOT_ALL_ORDERS = 'GOT_ALL_ORDERS'
 const GOT_ONE_ORDER = 'GOT_ONE_ORDER'
 const ADDED_ORDER_TO_STORE = 'ADDED_ORDER_TO_STORE'
-// const UPDATE_ORDER = 'UPDATE_ORDER'
 const GOT_ORDER_FROM_SESSION = 'GOT_ORDER_FROM_SESSION'
 const ADDED_ORDER_TO_SESSION = 'ADD_ORDER_TO_SESSION'
 const UPDATED_ORDER_IN_SESSION = 'UPDATED_ORDER_IN_SESSION'
@@ -43,7 +42,6 @@ export const getAnOrder = function(id) {
 
 export const sendOrderToDb = function(order) {
   return async () => {
-    console.log('sending to axios api/orders/put request', order)
     await axios.put('/api/orders', order)
   }
 }
@@ -61,10 +59,8 @@ export const addOrderToSessionForGuest = function(orderItem) {
 export const addOrderToSessionForUser = function(orderItem) {
   const sentItem = []
   sentItem.push(orderItem)
-  console.log('sentItem', sentItem)
   return async dispatch => {
     const {data} = await axios.post(`/api/session/`, sentItem)
-    console.log('DATA', data)
     dispatch(addedOrderToSession(data))
     dispatch(sendOrderToDb(data))
   }
@@ -106,7 +102,7 @@ export const clearSession = function() {
   }
 }
 
-// export const setOpenCartOnSession = function(id) {
+// export const setOpenCartOnSession = function(id) { // LOGIN THUNK
 //   return async dispatch => {
 //     const openOrder = await axios.get(`/api/orders/${id}`)
 //     await axios.put('/api/session', openOrder)
@@ -118,36 +114,16 @@ export const clearSession = function() {
 export const setOpenCartOnSession = function(id) {
   return async dispatch => {
     const openOrder = await axios.get(`/api/orders/${id}`)
-    console.log('open order', openOrder)
+
     if (!openOrder.data) {
       dispatch(getOrderFromSession())
     } else {
       await axios.put('/api/session', [openOrder.data])
-      // console.log(‘order in setOpenCartOnSessionThunk’, openOrder)
+
       dispatch(addedOrderToSession([openOrder.data]))
     }
   }
 }
-
-//REDUCERS
-
-// function helper(arr) {
-//   if (!arr.length) return arr
-//   let newArr = [arr[0]]
-//   for (let i = 1; i < arr.length; i++) {
-//     let elem = arr[i]
-//     let result
-//     for (let j = 0; j < newArr.length; j++) {
-//       if (newArr[j].name === elem.name) {
-//         newArr[j].quantity += elem.quantity
-//         newArr[j].totalPrice += elem.totalPrice
-//         result = true
-//       }
-//     }
-//     if (!result) newArr.push(elem)
-//   }
-//   return newArr
-// }
 
 export default function orderReducer(
   orders = {all: [], session: [], single: {}},
@@ -159,9 +135,7 @@ export default function orderReducer(
     case GOT_ONE_ORDER:
       return {...orders, single: action.order}
     case ADDED_ORDER_TO_STORE:
-      return {...orders, all: action.order} //helper([...orders.all, action.order])}
-    // case UPDATE_ORDER:
-    //   return {...orders, all: action.order.filter(item => item.quantity > 0)}
+      return {...orders, all: action.order}
     case ADDED_ORDER_TO_SESSION:
       return {...orders, session: action.order}
     case GOT_ORDER_FROM_SESSION:
