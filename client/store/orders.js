@@ -103,6 +103,15 @@ export const clearSession = function() {
   }
 }
 
+export const setOpenCartOnSession = function(id) {
+  return async dispatch => {
+    const openOrder = await axios.get(`/api/orders/${id}`)
+    await axios.put('/api/session', openOrder)
+    console.log('order in setOpenCartOnSessionThunk', openOrder)
+    dispatch(addedOrderToSession(openOrder))
+  }
+}
+
 //REDUCERS
 
 // function helper(arr) {
