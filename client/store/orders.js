@@ -105,7 +105,6 @@ export const clearSession = function() {
 export const setOpenCartOnSession = function() {
   return async dispatch => {
     const {data} = await axios.get(`/api/orders/userCart`)
-    console.log(data)
     if (data && data.id) {
       let orderArr = []
       let flowerArr = data.flowers
